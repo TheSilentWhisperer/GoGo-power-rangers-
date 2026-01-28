@@ -23,10 +23,12 @@ func emulate_game(go_ *environment.Go_, black_player agents.Agent, white_player 
 }
 
 func main() {
-	go_ := environment.NewGoGame(
-		9, // height
-		9, // width
-	)
-	black_agent, white_agent := agents.NewRandomAgent(), agents.NewRandomAgent()
-	emulate_game(go_, black_agent, white_agent)
+	for i := 0; i < 5000; i++ {
+		go_ := environment.NewGoGame(
+			9, // height
+			9, // width
+		)
+		black_agent, white_agent := agents.NewRandomAgent(), agents.NewRandomAgent()
+		emulate_game(go_, black_agent, white_agent)
+	}
 }

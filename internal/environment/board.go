@@ -6,6 +6,7 @@ type board struct {
 	matrix        [][]Stone
 	CurrentPlayer Stone
 	passes        int
+	unionFind     *unionFind
 }
 
 // Constructor
@@ -16,6 +17,7 @@ func newBoard(height, width int) *board {
 		matrix:        make([][]Stone, height),
 		CurrentPlayer: Black,
 		passes:        0,
+		unionFind:     newUnionFind(height, width),
 	}
 	for i := range b.matrix {
 		b.matrix[i] = make([]Stone, width)
