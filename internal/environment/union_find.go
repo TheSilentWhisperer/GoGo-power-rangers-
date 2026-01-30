@@ -39,7 +39,6 @@ func newUnionFind(height, width int) *unionFind {
 }
 
 // Methods
-
 func (uf *unionFind) addStone(pos position, liberties int) {
 	uf.parents[pos] = pos
 	uf.groups[pos] = newGroup(pos, liberties)

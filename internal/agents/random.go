@@ -12,8 +12,8 @@ func NewRandomAgent() *randomAgent {
 	return &randomAgent{}
 }
 
-func (ra *randomAgent) SelectAction(go_ *environment.Go_) environment.Action {
-	var legalActions []environment.Action = go_.Legal_actions
+func (ra *randomAgent) SelectAction(game *environment.Game) environment.Action {
+	var legalActions []environment.Action = game.LegalActions
 	var n int = len(legalActions)
 	var r int = rand.Intn(n)
 	return legalActions[r]

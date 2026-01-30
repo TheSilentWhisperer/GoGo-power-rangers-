@@ -5,5 +5,5 @@ import (
 )
 
 type Agent interface {
-	SelectAction(go_ *environment.Go_) environment.Action
+	SelectAction(go_ *environment.Game) environment.Action
 }
