@@ -38,6 +38,26 @@ func newBoardHasher(height, width int) *boardHasher {
 	return bh
 }
 
+func (bh *boardHasher) deepCopy() *boardHasher {
+	bh_copy := &boardHasher{
+		height:       bh.height,
+		width:        bh.width,
+		zobristTable: make([][][]uint64, bh.height),
+		playerHash:   bh.playerHash,
+		boardHash:    bh.boardHash,
+		hashHistory:  make([]uint64, len(bh.hashHistory)),
+	}
+	for i := 0; i < bh.height; i++ {
+		bh_copy.zobristTable[i] = make([][]uint64, bh.width)
+		for j := 0; j < bh.width; j++ {
+			bh_copy.zobristTable[i][j] = make([]uint64, 2)
+			copy(bh_copy.zobristTable[i][j], bh.zobristTable[i][j])
+		}
+	}
+	copy(bh_copy.hashHistory, bh.hashHistory)
+	return bh_copy
+}
+
 // Methods
 func (bh *boardHasher) updateHash(i, j int, oldStone, newStone Stone, updatePlayer bool) {
 	// Remove old stone
@@ -58,15 +78,15 @@ func (bh *boardHasher) updateHashHistory() {
 	bh.hashHistory = append(bh.hashHistory, bh.boardHash)
 }
 
-func (bh *boardHasher) computeResultingHash(capturedStones map[position]Stone, placedPos position, placedStone Stone) uint64 {
+func (bh *boardHasher) computeResultingHash(capturedStones map[Position]Stone, placedPos Position, placedStone Stone) uint64 {
 	var resultingHash uint64 = bh.boardHash
 	// Remove captured stones
 	for pos, stone := range capturedStones {
-		var i, j int = pos.i, pos.j
+		var i, j int = pos.I, pos.J
 		resultingHash ^= bh.zobristTable[i][j][int(stone)%2]
 	}
 	// Add placed stone
-	var i, j int = placedPos.i, placedPos.j
+	var i, j int = placedPos.I, placedPos.J
 	resultingHash ^= bh.zobristTable[i][j][int(placedStone)%2]
 	// Update player hash
 	resultingHash ^= bh.playerHash

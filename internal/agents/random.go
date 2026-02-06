@@ -15,6 +15,6 @@ func NewRandomAgent() *randomAgent {
 func (ra *randomAgent) SelectAction(game *environment.Game) environment.Action {
 	var legalActions []environment.Action = game.LegalActions
 	var n int = len(legalActions)
-	var r int = rand.Intn(n)
+	var r int = rand.Intn(n-1) + 1 // Exclude the last action (resign) to make the agent more competitive
 	return legalActions[r]
 }

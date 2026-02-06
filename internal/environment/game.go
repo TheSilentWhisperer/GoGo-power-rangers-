@@ -1,14 +1,29 @@
 package environment
 
+type Score struct {
+	black float64
+	white float64
+}
+
+func newScore(black, white float64) Score {
+	return Score{
+		black: black,
+		white: white,
+	}
+}
+
+// Struct
 type Game struct {
+	komi         float64
 	Board        *board
 	LegalActions []Action
 	boardHasher  *boardHasher
 }
 
 // Constructor
-func NewGame(height, width int) *Game {
+func NewGame(height, width int, komi float64) *Game {
 	var game *Game = &Game{
+		komi:         komi,
 		Board:        newBoard(height, width),
 		LegalActions: make([]Action, 0),
 		boardHasher:  newBoardHasher(height, width),
@@ -18,24 +33,103 @@ func NewGame(height, width int) *Game {
 	return game
 }
 
-// Methods
-func (game *Game) IsTerminal() bool {
-	return game.Board.passes >= 2
+func (game *Game) DeepCopy() *Game {
+	var game_copy *Game = &Game{
+		Board:        game.Board.deepCopy(),
+		LegalActions: make([]Action, len(game.LegalActions)),
+		boardHasher:  game.boardHasher.deepCopy(),
+	}
+	copy(game_copy.LegalActions, game.LegalActions)
+	return game_copy
 }
 
-func (game *Game) getNeighboringLiberties(i, j int) (int, map[position]int, map[position]int) {
-	var liberties int = 0
-	var friendly_shared_liberties map[position]int = make(map[position]int)
-	var enemy_shared_liberties map[position]int = make(map[position]int)
+// Methods
+func (game *Game) ComputeScore() Score {
+	var black_score float64 = 0.0
+	var white_score float64 = game.komi
+	// dfs from each empty point to determine territory
+	var is_black [][]bool = make([][]bool, game.Board.Height)
+	var is_white [][]bool = make([][]bool, game.Board.Height)
+	for i := range is_white {
+		is_white[i] = make([]bool, game.Board.Width)
+	}
+	for i := range is_black {
+		is_black[i] = make([]bool, game.Board.Width)
+	}
+	var visited [][]bool = make([][]bool, game.Board.Height)
+	for i := range visited {
+		visited[i] = make([]bool, game.Board.Width)
+	}
 
-	var neighbors map[position]Stone = game.Board.getNeighbors(i, j)
+	var dfs func(i, j int)
+
+	dfs = func(i, j int) {
+		visited[i][j] = true
+		var neighbors map[Position]Stone = game.Board.getNeighbors(i, j)
+		for neighbor, neighbor_stone := range neighbors {
+			switch neighbor_stone {
+			case Empty:
+				if !visited[neighbor.I][neighbor.J] {
+					dfs(neighbor.I, neighbor.J)
+				}
+			case Black:
+				is_black[i][j] = true
+			case White:
+				is_white[i][j] = true
+			}
+			is_black[i][j] = is_black[neighbor.I][neighbor.J] || is_black[i][j]
+			is_white[i][j] = is_white[neighbor.I][neighbor.J] || is_white[i][j]
+		}
+	}
+	for i := 0; i < game.Board.Height; i++ {
+		for j := 0; j < game.Board.Width; j++ {
+			if game.Board.Matrix[i][j] == Empty && !visited[i][j] {
+				dfs(i, j)
+				if is_black[i][j] && !is_white[i][j] {
+					black_score++
+				} else if is_white[i][j] && !is_black[i][j] {
+					white_score++
+				}
+			} else if game.Board.Matrix[i][j] == Black {
+				black_score++
+			} else if game.Board.Matrix[i][j] == White {
+				white_score++
+			}
+		}
+	}
+
+	return newScore(black_score, white_score)
+}
+
+func (game *Game) GetWinner() Stone {
+	if game.Board.resigned != Empty {
+		return game.Board.resigned.Opponent()
+	}
+	var score Score = game.ComputeScore()
+	if score.black > score.white {
+		return Black
+	} else {
+		return White
+	}
+}
+
+func (game *Game) IsTerminal() bool {
+	return game.Board.passes >= 2 || game.Board.resigned != Empty
+}
+
+func (game *Game) getNeighboringLiberties(i, j int) (int, map[Position]int, map[Position]int) {
+	var liberties int = 0
+	var friendly_shared_liberties map[Position]int = make(map[Position]int)
+	var enemy_shared_liberties map[Position]int = make(map[Position]int)
+
+	var neighbors map[Position]Stone = game.Board.getNeighbors(i, j)
 
 	for neighbor, neighbor_stone := range neighbors {
 		if neighbor_stone == Empty {
 			liberties++
 			continue
 		}
-		var neighbor_root position = game.Board.unionFind.find(neighbor)
+		var neighbor_root Position = game.Board.unionFind.find(neighbor)
 		switch neighbor_stone {
 		case game.Board.CurrentPlayer:
 			friendly_shared_liberties[neighbor_root] += 1
@@ -49,20 +143,20 @@ func (game *Game) getNeighboringLiberties(i, j int) (int, map[position]int, map[
 
 func (game *Game) isLegalAction(i, j int) bool {
 
-	if game.Board.matrix[i][j] != Empty {
+	if game.Board.Matrix[i][j] != Empty {
 		return false
 	}
 
 	var liberties int
-	var friendly_shared_liberties, enemy_shared_liberties map[position]int
+	var friendly_shared_liberties, enemy_shared_liberties map[Position]int
 	liberties, friendly_shared_liberties, enemy_shared_liberties = game.getNeighboringLiberties(i, j)
 
 	//Any capturing move is legal iff it does not violate superko
 	for enemy_root, shared_liberties := range enemy_shared_liberties {
 		var enemy_group *group = game.Board.unionFind.groups[enemy_root]
 		if enemy_group.liberties-shared_liberties == 0 {
-			var captured_stones map[position]Stone = game.Board.getCapturedStones(enemy_group)
-			var placed_pos position = newPosition(i, j)
+			var captured_stones map[Position]Stone = game.Board.getCapturedStones(enemy_group)
+			var placed_pos Position = NewPosition(i, j)
 			var placed_stone Stone = game.Board.CurrentPlayer
 			var resulting_hash uint64 = game.boardHasher.computeResultingHash(captured_stones, placed_pos, placed_stone)
 			// Check if resulting hash is in history (Superko rule)
@@ -86,8 +180,8 @@ func (game *Game) isLegalAction(i, j int) bool {
 	}
 
 	//Still need to check for superko
-	var captured_stones map[position]Stone = make(map[position]Stone) // No captures
-	var placed_pos position = newPosition(i, j)
+	var captured_stones map[Position]Stone = make(map[Position]Stone) // No captures
+	var placed_pos Position = NewPosition(i, j)
 	var placed_stone Stone = game.Board.CurrentPlayer
 	var resulting_hash uint64 = game.boardHasher.computeResultingHash(captured_stones, placed_pos, placed_stone)
 	// Check if resulting hash is in history (Superko rule)
@@ -100,12 +194,14 @@ func (game *Game) isLegalAction(i, j int) bool {
 }
 
 func (game *Game) computeLegalActions() {
-	var legal_actions []Action = make([]Action, 0, game.Board.height*game.Board.width+1)
+	var legal_actions []Action = make([]Action, 0, game.Board.Height*game.Board.Width+1)
+	// Add resign action
+	legal_actions = append(legal_actions, Resign{})
 	// Add pass action
 	legal_actions = append(legal_actions, pass{})
 	// Add put stone actions
-	for i := 0; i < game.Board.height; i++ {
-		for j := 0; j < game.Board.width; j++ {
+	for i := 0; i < game.Board.Height; i++ {
+		for j := 0; j < game.Board.Width; j++ {
 			if game.isLegalAction(i, j) {
 				legal_actions = append(legal_actions, putStone{i: i, j: j})
 			}
@@ -116,19 +212,19 @@ func (game *Game) computeLegalActions() {
 
 func (game *Game) captureGroup(captured_group *group) {
 
-	var capturedStones map[position]Stone = game.Board.getCapturedStones(captured_group)
+	var capturedStones map[Position]Stone = game.Board.getCapturedStones(captured_group)
 	for pos, stone := range capturedStones {
-		var i, j int = pos.i, pos.j
+		var i, j int = pos.I, pos.J
 		// Remove stone from board and update board hash
-		game.Board.matrix[i][j] = Empty
+		game.Board.Matrix[i][j] = Empty
 		game.boardHasher.updateHash(i, j, stone, Empty, false)
 		// Remove stone from union-find
 		game.Board.unionFind.removeStone(pos)
 		// Update neighboring friendly groups' liberties
-		var neighbors map[position]Stone = game.Board.getNeighbors(i, j)
+		var neighbors map[Position]Stone = game.Board.getNeighbors(i, j)
 		for neighbor, neighbor_stone := range neighbors {
 			if neighbor_stone == game.Board.CurrentPlayer {
-				var neighbor_root position = game.Board.unionFind.find(neighbor)
+				var neighbor_root Position = game.Board.unionFind.find(neighbor)
 				var neighbor_group *group = game.Board.unionFind.groups[neighbor_root]
 				neighbor_group.liberties++
 			}
@@ -144,14 +240,14 @@ func (game *Game) putStone(i, j int) {
 	liberties, friendly_shared_liberties, enemy_shared_liberties := game.getNeighboringLiberties(i, j)
 
 	// Place the Stone and update board hash
-	game.Board.matrix[i][j] = game.Board.CurrentPlayer
+	game.Board.Matrix[i][j] = game.Board.CurrentPlayer
 	game.boardHasher.updateHash(i, j, Empty, game.Board.CurrentPlayer, false)
 
 	// Add new stone to union-find
-	game.Board.unionFind.addStone(newPosition(i, j), liberties)
+	game.Board.unionFind.addStone(NewPosition(i, j), liberties)
 
-	var new_stone_pos position = newPosition(i, j)
-	var new_stone_root position = game.Board.unionFind.find(new_stone_pos)
+	var new_stone_pos Position = NewPosition(i, j)
+	var new_stone_root Position = game.Board.unionFind.find(new_stone_pos)
 	var new_stone_group *group = game.Board.unionFind.groups[new_stone_root]
 
 	// Merge with friendly groups
@@ -181,6 +277,12 @@ func (game *Game) PlayAction(action Action) {
 		game.Board.passes = 0
 	case pass:
 		game.Board.passes++
+	case Resign:
+		if game.Board.CurrentPlayer == Black {
+			game.Board.resigned = Black
+		} else {
+			game.Board.resigned = White
+		}
 	}
 
 	// Switch current player
@@ -200,7 +302,7 @@ func (game *Game) PlayAction(action Action) {
 // Debugging and Display
 func (game *Game) DebugLiberties() {
 	for root_pos, group := range game.Board.unionFind.groups {
-		println("Group at (", root_pos.i, ",", root_pos.j, ") has", group.liberties, "liberties")
+		println("Group at (", root_pos.I, ",", root_pos.J, ") has", group.liberties, "liberties")
 	}
 }
 
@@ -220,9 +322,9 @@ func (game *Game) DisplayBoard() {
 	}
 
 	// Print board
-	for i := 0; i < game.Board.height; i++ {
-		for j := 0; j < game.Board.width; j++ {
-			print(stoneToChar[game.Board.matrix[i][j]], " ")
+	for i := 0; i < game.Board.Height; i++ {
+		for j := 0; j < game.Board.Width; j++ {
+			print(stoneToChar[game.Board.Matrix[i][j]], " ")
 		}
 		println()
 	}
