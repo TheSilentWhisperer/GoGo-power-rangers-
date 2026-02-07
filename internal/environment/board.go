@@ -1,11 +1,23 @@
 package environment
 
+type Passes struct {
+	Black bool
+	White bool
+}
+
+func NewPasses(black, white bool) Passes {
+	return Passes{
+		Black: black,
+		White: white,
+	}
+}
+
 type board struct {
 	Height        int
 	Width         int
 	Matrix        [][]Stone
 	CurrentPlayer Stone
-	passes        int
+	Passes        Passes
 	resigned      Stone
 	unionFind     *unionFind
 }
@@ -17,7 +29,8 @@ func newBoard(height, width int) *board {
 		Width:         width,
 		Matrix:        make([][]Stone, height),
 		CurrentPlayer: Black,
-		passes:        0,
+		Passes:        NewPasses(false, false),
+		resigned:      Empty,
 		unionFind:     newUnionFind(height, width),
 	}
 	for i := range b.Matrix {
@@ -32,7 +45,8 @@ func (b *board) deepCopy() *board {
 		Width:         b.Width,
 		Matrix:        make([][]Stone, b.Height),
 		CurrentPlayer: b.CurrentPlayer,
-		passes:        b.passes,
+		Passes:        b.Passes,
+		resigned:      b.resigned,
 		unionFind:     b.unionFind.deepCopy(),
 	}
 	for i := range b.Matrix {

@@ -35,6 +35,7 @@ func NewGame(height, width int, komi float64) *Game {
 
 func (game *Game) DeepCopy() *Game {
 	var game_copy *Game = &Game{
+		komi:         game.komi,
 		Board:        game.Board.deepCopy(),
 		LegalActions: make([]Action, len(game.LegalActions)),
 		boardHasher:  game.boardHasher.deepCopy(),
@@ -72,28 +73,40 @@ func (game *Game) ComputeScore() Score {
 				if !visited[neighbor.I][neighbor.J] {
 					dfs(neighbor.I, neighbor.J)
 				}
+				is_black[i][j] = is_black[neighbor.I][neighbor.J] || is_black[i][j]
+				is_white[i][j] = is_white[neighbor.I][neighbor.J] || is_white[i][j]
 			case Black:
 				is_black[i][j] = true
 			case White:
 				is_white[i][j] = true
 			}
-			is_black[i][j] = is_black[neighbor.I][neighbor.J] || is_black[i][j]
-			is_white[i][j] = is_white[neighbor.I][neighbor.J] || is_white[i][j]
 		}
 	}
+
 	for i := 0; i < game.Board.Height; i++ {
 		for j := 0; j < game.Board.Width; j++ {
-			if game.Board.Matrix[i][j] == Empty && !visited[i][j] {
+			if !visited[i][j] && game.Board.Matrix[i][j] == Empty {
 				dfs(i, j)
+			}
+		}
+	}
+
+	for i := 0; i < game.Board.Height; i++ {
+		for j := 0; j < game.Board.Width; j++ {
+			switch game.Board.Matrix[i][j] {
+			case Black:
+				black_score += 1.0
+			case White:
+				white_score += 1.0
+			case Empty:
 				if is_black[i][j] && !is_white[i][j] {
-					black_score++
+					black_score += 1.0
 				} else if is_white[i][j] && !is_black[i][j] {
-					white_score++
+					white_score += 1.0
+				} else {
+					black_score += 0.5
+					white_score += 0.5
 				}
-			} else if game.Board.Matrix[i][j] == Black {
-				black_score++
-			} else if game.Board.Matrix[i][j] == White {
-				white_score++
 			}
 		}
 	}
@@ -114,7 +127,7 @@ func (game *Game) GetWinner() Stone {
 }
 
 func (game *Game) IsTerminal() bool {
-	return game.Board.passes >= 2 || game.Board.resigned != Empty
+	return (game.Board.Passes.Black && game.Board.Passes.White) || game.Board.resigned != Empty
 }
 
 func (game *Game) getNeighboringLiberties(i, j int) (int, map[Position]int, map[Position]int) {
@@ -274,13 +287,19 @@ func (game *Game) PlayAction(action Action) {
 	switch a := action.(type) {
 	case putStone:
 		game.putStone(a.i, a.j)
-		game.Board.passes = 0
+		game.Board.Passes = NewPasses(false, false) // Reset passes after a move
 	case pass:
-		game.Board.passes++
+		switch game.Board.CurrentPlayer {
+		case Black:
+			game.Board.Passes.Black = true
+		case White:
+			game.Board.Passes.White = true
+		}
 	case Resign:
-		if game.Board.CurrentPlayer == Black {
+		switch game.Board.CurrentPlayer {
+		case Black:
 			game.Board.resigned = Black
-		} else {
+		case White:
 			game.Board.resigned = White
 		}
 	}
