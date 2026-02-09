@@ -1,115 +1,115 @@
 package environment
 
-import "fmt"
+import (
+	"fmt"
 
-type Position struct {
-	I int
-	J int
-}
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+)
 
-func NewPosition(i, j int) Position {
-	return Position{I: i, J: j}
-}
+// Position is a 2D board coordinate. Use tuples.Pair to represent it.
+type Position = utils.Pair[int, int]
 
-type group struct {
-	root      Position
-	rank      int
-	liberties int
-}
+func NewPosition(i, j int) Position { return utils.NewPair(i, j) }
 
-// Constructor
-func newGroup(root Position, liberties int) *group {
-	return &group{
-		root:      root,
-		rank:      0,
-		liberties: liberties,
-	}
-}
-
-func (g *group) deepCopy() *group {
-	return &group{
-		root:      g.root,
-		rank:      g.rank,
-		liberties: g.liberties,
-	}
-}
-
-type unionFind struct {
-	parents map[Position]Position // parent is self for root nodes
-	groups  map[Position]*group   // key is root position
+type Group struct {
+	Root      Position
+	Rank      int
+	Liberties int
 }
 
 // Constructor
-func newUnionFind(height, width int) *unionFind {
-	return &unionFind{
-		parents: make(map[Position]Position),
-		groups:  make(map[Position]*group),
+func NewGroup(root Position, liberties int) *Group {
+	return &Group{
+		Root:      root,
+		Rank:      0,
+		Liberties: liberties,
 	}
 }
 
-func (uf *unionFind) deepCopy() *unionFind {
-	uf_copy := &unionFind{
-		parents: make(map[Position]Position),
-		groups:  make(map[Position]*group),
+func (g *Group) DeepCopy() *Group {
+	return &Group{
+		Root:      g.Root,
+		Rank:      g.Rank,
+		Liberties: g.Liberties,
 	}
-	for pos, parent := range uf.parents {
-		uf_copy.parents[pos] = parent
+}
+
+type UnionFind struct {
+	Parents map[Position]Position // parent is self for root nodes
+	Groups  map[Position]*Group   // key is root position
+}
+
+// Constructor
+func NewUnionFind(height, width int) *UnionFind {
+	return &UnionFind{
+		Parents: make(map[Position]Position),
+		Groups:  make(map[Position]*Group),
 	}
-	for root, group := range uf.groups {
-		uf_copy.groups[root] = group.deepCopy()
+}
+
+func (uf *UnionFind) DeepCopy() *UnionFind {
+	uf_copy := &UnionFind{
+		Parents: make(map[Position]Position),
+		Groups:  make(map[Position]*Group),
+	}
+	for pos, parent := range uf.Parents {
+		uf_copy.Parents[pos] = parent
+	}
+	for root, group := range uf.Groups {
+		uf_copy.Groups[root] = group.DeepCopy()
 	}
 	return uf_copy
 }
 
 // Methods
-func (uf *unionFind) addStone(pos Position, liberties int) {
-	uf.parents[pos] = pos
-	uf.groups[pos] = newGroup(pos, liberties)
+func (uf *UnionFind) AddStone(pos Position, liberties int) {
+	uf.Parents[pos] = pos
+	uf.Groups[pos] = NewGroup(pos, liberties)
 }
 
-func (uf *unionFind) find(pos Position) Position {
+func (uf *UnionFind) Find(pos Position) Position {
 	var parent Position
 	var ok bool
-	if parent, ok = uf.parents[pos]; !ok {
-		panic(fmt.Sprintf("UnionFind::find; stone at position {%d,%d} does not exist", pos.I, pos.J))
+	if parent, ok = uf.Parents[pos]; !ok {
+		panic(fmt.Sprintf("UnionFind::Find; stone at position {%d,%d} does not exist", pos.I, pos.J))
 	}
 	if parent != pos {
-		uf.parents[pos] = uf.find(parent) // Path compression
-		return uf.parents[pos]
+		uf.Parents[pos] = uf.Find(parent) // Path compression
+		return uf.Parents[pos]
 	}
 	return parent
 }
 
-func (uf *unionFind) moveGroup(fromGroup, toGroup *group, shared_liberties int) {
+func (uf *UnionFind) MoveGroup(from_group, to_group *Group, shared_liberties int) {
 	// Update parent pointers
-	uf.parents[fromGroup.root] = toGroup.root
+	uf.Parents[from_group.Root] = to_group.Root
 	// Update group info
-	toGroup.liberties += fromGroup.liberties - 2*shared_liberties
-	delete(uf.groups, fromGroup.root)
+	to_group.Liberties += from_group.Liberties - 2*shared_liberties
+	delete(uf.Groups, from_group.Root)
 }
 
-func (uf *unionFind) union(group1, group2 *group, shared_liberties int) *group {
+func (uf *UnionFind) Union(group1, group2 *Group, shared_liberties int) *Group {
 
-	if group1.rank < group2.rank {
-		uf.moveGroup(group1, group2, shared_liberties)
+	if group1.Rank < group2.Rank {
+		uf.MoveGroup(group1, group2, shared_liberties)
 		return group2
-	} else if group1.rank > group2.rank {
-		uf.moveGroup(group2, group1, shared_liberties)
+	} else if group1.Rank > group2.Rank {
+		uf.MoveGroup(group2, group1, shared_liberties)
 		return group1
 	} else {
-		uf.moveGroup(group2, group1, shared_liberties)
-		group1.rank += 1
+		uf.MoveGroup(group2, group1, shared_liberties)
+		group1.Rank += 1
 		return group1
 	}
 }
 
-func (uf *unionFind) removeStone(pos Position) {
-	if _, ok := uf.parents[pos]; !ok {
-		panic(fmt.Sprintf("UnionFind::removeStone; stone at position {%d,%d} does not exist", pos.I, pos.J))
+func (uf *UnionFind) RemoveStone(pos Position) {
+	if _, ok := uf.Parents[pos]; !ok {
+		panic(fmt.Sprintf("UnionFind::RemoveStone; stone at position {%d,%d} does not exist", pos.I, pos.J))
 	}
-	delete(uf.parents, pos)
+	delete(uf.Parents, pos)
 }
 
-func (uf *unionFind) removeGroup(group *group) {
-	delete(uf.groups, group.root)
+func (uf *UnionFind) RemoveGroup(group *Group) {
+	delete(uf.Groups, group.Root)
 }

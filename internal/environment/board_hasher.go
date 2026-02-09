@@ -4,91 +4,91 @@ import (
 	"math/rand"
 )
 
-type boardHasher struct {
-	height       int
-	width        int
-	zobristTable [][][]uint64
-	playerHash   uint64
-	boardHash    uint64 // Cached hash value
-	hashHistory  []uint64
+type BoardHasher struct {
+	Height       int
+	Width        int
+	ZobristTable [][][]uint64
+	PlayerHash   uint64
+	BoardHash    uint64 // Cached hash value
+	HashHistory  []uint64
 }
 
 // Constructor
-func (bh *boardHasher) randomizeHasher() {
-	bh.zobristTable = make([][][]uint64, bh.height)
-	for i := 0; i < bh.height; i++ {
-		bh.zobristTable[i] = make([][]uint64, bh.width)
-		for j := 0; j < bh.width; j++ {
-			bh.zobristTable[i][j] = make([]uint64, 2) // Two stones: Black and White
+func (bh *BoardHasher) RandomizeHasher() {
+	bh.ZobristTable = make([][][]uint64, bh.Height)
+	for i := 0; i < bh.Height; i++ {
+		bh.ZobristTable[i] = make([][]uint64, bh.Width)
+		for j := 0; j < bh.Width; j++ {
+			bh.ZobristTable[i][j] = make([]uint64, 2) // Two stones: Black and White
 			for s := 0; s < 2; s++ {
-				bh.zobristTable[i][j][s] = rand.Uint64()
+				bh.ZobristTable[i][j][s] = rand.Uint64()
 			}
 		}
 	}
-	bh.playerHash = rand.Uint64()
+	bh.PlayerHash = rand.Uint64()
 }
 
-func newBoardHasher(height, width int) *boardHasher {
-	bh := &boardHasher{
-		height:      height,
-		width:       width,
-		hashHistory: make([]uint64, 0),
+func NewBoardHasher(height, width int) *BoardHasher {
+	bh := &BoardHasher{
+		Height:      height,
+		Width:       width,
+		HashHistory: make([]uint64, 0),
 	}
-	bh.randomizeHasher()
+	bh.RandomizeHasher()
 	return bh
 }
 
-func (bh *boardHasher) deepCopy() *boardHasher {
-	bh_copy := &boardHasher{
-		height:       bh.height,
-		width:        bh.width,
-		zobristTable: make([][][]uint64, bh.height),
-		playerHash:   bh.playerHash,
-		boardHash:    bh.boardHash,
-		hashHistory:  make([]uint64, len(bh.hashHistory)),
+func (bh *BoardHasher) DeepCopy() *BoardHasher {
+	bh_copy := &BoardHasher{
+		Height:       bh.Height,
+		Width:        bh.Width,
+		ZobristTable: make([][][]uint64, bh.Height),
+		PlayerHash:   bh.PlayerHash,
+		BoardHash:    bh.BoardHash,
+		HashHistory:  make([]uint64, len(bh.HashHistory)),
 	}
-	for i := 0; i < bh.height; i++ {
-		bh_copy.zobristTable[i] = make([][]uint64, bh.width)
-		for j := 0; j < bh.width; j++ {
-			bh_copy.zobristTable[i][j] = make([]uint64, 2)
-			copy(bh_copy.zobristTable[i][j], bh.zobristTable[i][j])
+	for i := 0; i < bh.Height; i++ {
+		bh_copy.ZobristTable[i] = make([][]uint64, bh.Width)
+		for j := 0; j < bh.Width; j++ {
+			bh_copy.ZobristTable[i][j] = make([]uint64, 2)
+			copy(bh_copy.ZobristTable[i][j], bh.ZobristTable[i][j])
 		}
 	}
-	copy(bh_copy.hashHistory, bh.hashHistory)
+	copy(bh_copy.HashHistory, bh.HashHistory)
 	return bh_copy
 }
 
 // Methods
-func (bh *boardHasher) updateHash(i, j int, oldStone, newStone Stone, updatePlayer bool) {
+func (bh *BoardHasher) UpdateHash(i, j int, old_stone, new_stone Stone, update_player bool) {
 	// Remove old stone
-	if oldStone != Empty {
-		bh.boardHash ^= bh.zobristTable[i][j][int(oldStone)%2]
+	if old_stone != Empty {
+		bh.BoardHash ^= bh.ZobristTable[i][j][int(old_stone)%2]
 	}
 	// Add new stone
-	if newStone != Empty {
-		bh.boardHash ^= bh.zobristTable[i][j][int(newStone)%2]
+	if new_stone != Empty {
+		bh.BoardHash ^= bh.ZobristTable[i][j][int(new_stone)%2]
 	}
 	// Update player hash if needed
-	if updatePlayer {
-		bh.boardHash ^= bh.playerHash
+	if update_player {
+		bh.BoardHash ^= bh.PlayerHash
 	}
 }
 
-func (bh *boardHasher) updateHashHistory() {
-	bh.hashHistory = append(bh.hashHistory, bh.boardHash)
+func (bh *BoardHasher) UpdateHashHistory() {
+	bh.HashHistory = append(bh.HashHistory, bh.BoardHash)
 }
 
-func (bh *boardHasher) computeResultingHash(capturedStones map[Position]Stone, placedPos Position, placedStone Stone) uint64 {
-	var resultingHash uint64 = bh.boardHash
+func (bh *BoardHasher) ComputeResultingHash(captured_stones map[Position]Stone, placed_pos Position, placed_stone Stone) uint64 {
+	var resulting_hash uint64 = bh.BoardHash
 	// Remove captured stones
-	for pos, stone := range capturedStones {
+	for pos, stone := range captured_stones {
 		var i, j int = pos.I, pos.J
-		resultingHash ^= bh.zobristTable[i][j][int(stone)%2]
+		resulting_hash ^= bh.ZobristTable[i][j][int(stone)%2]
 	}
 	// Add placed stone
-	var i, j int = placedPos.I, placedPos.J
-	resultingHash ^= bh.zobristTable[i][j][int(placedStone)%2]
+	var i, j int = placed_pos.I, placed_pos.J
+	resulting_hash ^= bh.ZobristTable[i][j][int(placed_stone)%2]
 	// Update player hash
-	resultingHash ^= bh.playerHash
-	return resultingHash
+	resulting_hash ^= bh.PlayerHash
+	return resulting_hash
 }

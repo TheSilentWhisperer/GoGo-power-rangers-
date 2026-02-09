@@ -12,26 +12,26 @@ func NewPasses(black, white bool) Passes {
 	}
 }
 
-type board struct {
+type Board struct {
 	Height        int
 	Width         int
 	Matrix        [][]Stone
 	CurrentPlayer Stone
 	Passes        Passes
-	resigned      Stone
-	unionFind     *unionFind
+	Resigned      Stone
+	UnionFind     *UnionFind
 }
 
 // Constructor
-func newBoard(height, width int) *board {
-	var b *board = &board{
+func NewBoard(height, width int) *Board {
+	var b *Board = &Board{
 		Height:        height,
 		Width:         width,
 		Matrix:        make([][]Stone, height),
 		CurrentPlayer: Black,
 		Passes:        NewPasses(false, false),
-		resigned:      Empty,
-		unionFind:     newUnionFind(height, width),
+		Resigned:      Empty,
+		UnionFind:     NewUnionFind(height, width),
 	}
 	for i := range b.Matrix {
 		b.Matrix[i] = make([]Stone, width)
@@ -39,15 +39,15 @@ func newBoard(height, width int) *board {
 	return b
 }
 
-func (b *board) deepCopy() *board {
-	var board_copy *board = &board{
+func (b *Board) DeepCopy() *Board {
+	var board_copy *Board = &Board{
 		Height:        b.Height,
 		Width:         b.Width,
 		Matrix:        make([][]Stone, b.Height),
 		CurrentPlayer: b.CurrentPlayer,
 		Passes:        b.Passes,
-		resigned:      b.resigned,
-		unionFind:     b.unionFind.deepCopy(),
+		Resigned:      b.Resigned,
+		UnionFind:     b.UnionFind.DeepCopy(),
 	}
 	for i := range b.Matrix {
 		board_copy.Matrix[i] = make([]Stone, b.Width)
@@ -57,13 +57,13 @@ func (b *board) deepCopy() *board {
 }
 
 // Methods
-func (board *board) getNeighbors(i, j int) map[Position]Stone {
+func (board *Board) GetNeighbors(i, j int) map[Position]Stone {
 	var neighbors map[Position]Stone = make(map[Position]Stone)
 	var directions []Position = []Position{
-		{-1, 0}, // Up
-		{1, 0},  // Down
-		{0, -1}, // Left
-		{0, 1},  // Right
+		NewPosition(-1, 0), // Up
+		NewPosition(1, 0),  // Down
+		NewPosition(0, -1), // Left
+		NewPosition(0, 1),  // Right
 	}
 	for _, dir := range directions {
 		ni, nj := i+dir.I, j+dir.J
@@ -75,8 +75,8 @@ func (board *board) getNeighbors(i, j int) map[Position]Stone {
 	return neighbors
 }
 
-func (board *board) getCapturedStones(captured_group *group) map[Position]Stone {
-	var capturedStones map[Position]Stone = make(map[Position]Stone)
+func (board *Board) GetCapturedStones(captured_group *Group) map[Position]Stone {
+	var captured_stones map[Position]Stone = make(map[Position]Stone)
 
 	//declare signature of dfs function
 	var dfs func(pos Position)
@@ -85,9 +85,9 @@ func (board *board) getCapturedStones(captured_group *group) map[Position]Stone 
 	//define dfs function
 	dfs = func(pos Position) {
 		visited[pos] = true
-		capturedStones[pos] = board.Matrix[pos.I][pos.J]
+		captured_stones[pos] = board.Matrix[pos.I][pos.J]
 		// Explore neighbors
-		var neighbors map[Position]Stone = board.getNeighbors(pos.I, pos.J)
+		var neighbors map[Position]Stone = board.GetNeighbors(pos.I, pos.J)
 		for neighbor, neighbor_stone := range neighbors {
 			if neighbor_stone == board.Matrix[pos.I][pos.J] {
 				if !visited[neighbor] {
@@ -98,6 +98,6 @@ func (board *board) getCapturedStones(captured_group *group) map[Position]Stone 
 	}
 
 	// Start DFS from the root of the captured group
-	dfs(captured_group.root)
-	return capturedStones
+	dfs(captured_group.Root)
+	return captured_stones
 }

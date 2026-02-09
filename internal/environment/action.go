@@ -1,32 +1,31 @@
 package environment
 
 type Action interface {
-	isAction()
+	IsAction()
 	String() string
 }
-
-type putStone struct {
-	i int
-	j int
+type PutStone struct {
+	I int
+	J int
 }
 
-func (p putStone) isAction() {}
+func (p PutStone) IsAction() {}
 
-func (p putStone) String() string {
-	return "PutStone(" + string(rune('A'+p.j)) + "," + string(rune('1'+p.i)) + ")"
+func (p PutStone) String() string {
+	return "PutStone(" + string(rune('A'+p.J)) + "," + string(rune('1'+p.I)) + ")"
 }
 
-type pass struct{}
+type Pass struct{}
 
-func (p pass) isAction() {}
+func (p Pass) IsAction() {}
 
-func (p pass) String() string {
+func (p Pass) String() string {
 	return "Pass"
 }
 
 type Resign struct{}
 
-func (r Resign) isAction() {}
+func (r Resign) IsAction() {}
 
 func (r Resign) String() string {
 	return "Resign"
