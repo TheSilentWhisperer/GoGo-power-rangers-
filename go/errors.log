@@ -1,0 +1,1737 @@
+Group at ( 2 , 6 ) has 4 liberties
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . ○ . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+. . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 2 , 6 ) has 3 liberties
+. . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+. . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . . 
+. . . . . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+. . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . . 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 2 , 6 ) has 3 liberties
+. . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 0 , 0 ) has 2 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 4 liberties
+● . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 0 , 0 ) has 2 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 3 , 8 ) has 3 liberties
+● . . . . . . . ○ 
+. . . . . . . . . 
+. . . . . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 2 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 3 liberties
+● . . . . . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 2 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 0 , 4 ) has 3 liberties
+● . . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . . . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 5 , 1 ) has 4 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 4 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . ○ . . . ○ 
+. . . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 3 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 4 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . ○ . . . ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 4 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . ○ . . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . . 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . . . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . . ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 7 , 7 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . . . . . 
+. . . . . . . . . 
+. . . . . . . ○ ● 
+. . . . . . . . . 
+Current Player: ●
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 3 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . . . 
+. . . . . . . ○ ● 
+. . . . . . . . . 
+Current Player: ○
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 3 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . . . 
+. . . . . . . ○ ● 
+. . . . . . ○ . . 
+Current Player: ●
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+. . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+. . . . . . . ○ ● 
+. . . . . . ○ . . 
+Current Player: ○
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+. . . . . . . ○ ● 
+. . . . . . ○ . . 
+Current Player: ●
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+. . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ○
+Group at ( 0 , 8 ) has 3 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . . ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ●
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 3 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 3 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . . ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ○
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 0 , 8 ) has 2 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+● ● . . ○ . . . ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ●
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 3 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+. ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ○
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 3 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . . ○ . . 
+Current Player: ●
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 8 , 5 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . . . ● ○ . . 
+Current Player: ○
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 4 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . . . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . ○ . ● ○ . . 
+Current Player: ●
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 3 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+. ● . ○ . ● ○ . . 
+Current Player: ○
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 2 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 4 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● . . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ . ● ○ . . 
+Current Player: ●
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 2 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 4 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 4 liberties
+Group at ( 5 , 5 ) has 6 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . . ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ . ● ○ . . 
+Current Player: ○
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 6 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 2 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● . . 
+. . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ . ● ○ . . 
+Current Player: ●
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 6 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● . . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ . ● ○ . . 
+Current Player: ○
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 2 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 3 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ . ● ○ . . 
+Current Player: ●
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 2 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ . . 
+Current Player: ○
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 2 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ . . 
+Current Player: ●
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 1 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 2 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+. ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 3 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 4 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 6 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● . . . . . 
+○ ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 4 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 7 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . . . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 8 , 5 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 4 , 3 ) has 7 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 3 , 0 ) has 4 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . . . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 3 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 4 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 4 , 3 ) has 7 liberties
+● ● . . ○ . . ● ○ 
+. . ● . . . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 4 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 4 , 3 ) has 7 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ . ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 0 , 8 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 4 , 3 ) has 8 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . . 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 2 , 5 ) has 4 liberties
+Group at ( 5 , 5 ) has 5 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 4 , 3 ) has 8 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● . . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 15 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 5 ) has 4 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 15 liberties
+Group at ( 8 , 6 ) has 1 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . . . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 5 , 5 ) has 19 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 2 , 6 ) has 4 liberties
+Group at ( 3 , 8 ) has 5 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● . ○ ○ 
+○ ● . ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 4 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. . ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● . ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 2 liberties
+Group at ( 2 , 2 ) has 3 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. ● ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● . ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ○
+Group at ( 5 , 5 ) has 16 liberties
+Group at ( 8 , 6 ) has 1 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 7 ) has 1 liberties
+Group at ( 6 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 2 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 1 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. ● ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● . ○ ● 
+○ ● . ○ ● ● ○ ● . 
+Current Player: ●
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 5 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 19 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+● ● . . ○ . . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. ● ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ○
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 3 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 19 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 6 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+● ● . . ○ ○ . ● ○ 
+. . ● . ○ . ○ ● ○ 
+. ● ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ●
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 2 liberties
+Group at ( 5 , 5 ) has 19 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 6 liberties
+Group at ( 3 , 4 ) has 2 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 3 liberties
+Group at ( 8 , 1 ) has 2 liberties
+● ● . . ○ ○ . ● ○ 
+. . ● . ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ . ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ○
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 6 , 7 ) has 3 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 6 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 3 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ ○ . ● ○ 
+. . ● . ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● . 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ●
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 0 , 4 ) has 6 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 5 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 8 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 2 liberties
+● ● . . ○ ○ . ● ○ 
+. . ● . ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● ● 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ○
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 7 , 8 ) has 5 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+Group at ( 3 , 8 ) has 12 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 1 liberties
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 5 , 7 ) has 2 liberties
+● ● . . ○ ○ ○ ● ○ 
+. . ● . ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . . 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● ● 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ●
+Group at ( 3 , 8 ) has 11 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 1 liberties
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 2 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 4 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 5 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 3 liberties
+● ● . . ○ ○ ○ ● ○ 
+. . ● . ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . ● 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● ● 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ○
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 2 liberties
+Group at ( 3 , 8 ) has 11 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 1 liberties
+Group at ( 5 , 5 ) has 18 liberties
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 4 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 5 liberties
+Group at ( 8 , 3 ) has 2 liberties
+● ● . . ○ ○ ○ ● ○ 
+. . ● ○ ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . ● 
+○ ○ ● ● . ● ● ○ . 
+● . . . . ● . ● ● 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ●
+Group at ( 5 , 7 ) has 2 liberties
+Group at ( 7 , 0 ) has 1 liberties
+Group at ( 0 , 0 ) has 3 liberties
+Group at ( 6 , 0 ) has 1 liberties
+Group at ( 4 , 1 ) has 1 liberties
+Group at ( 2 , 2 ) has 2 liberties
+Group at ( 2 , 3 ) has 1 liberties
+Group at ( 8 , 1 ) has 2 liberties
+Group at ( 2 , 1 ) has 3 liberties
+Group at ( 4 , 8 ) has 2 liberties
+Group at ( 7 , 8 ) has 5 liberties
+Group at ( 8 , 3 ) has 2 liberties
+Group at ( 8 , 7 ) has 3 liberties
+Group at ( 1 , 2 ) has 2 liberties
+Group at ( 3 , 8 ) has 11 liberties
+Group at ( 3 , 0 ) has 2 liberties
+Group at ( 1 , 7 ) has 1 liberties
+Group at ( 5 , 5 ) has 20 liberties
+● ● . . ○ ○ ○ ● ○ 
+. . ● ○ ○ . ○ ● ○ 
+● ● ○ ● . ● ○ . ○ 
+○ . ○ ○ ○ ● ○ ○ ○ 
+○ ● ○ ● ● ● . . ● 
+○ ○ ● ● . ● ● ○ . 
+● . . ● . ● . ● ● 
+○ . . . . ● ● . ● 
+○ ● . ○ ● ● . ● . 
+Current Player: ○
+panic: UnionFind::find; stone at position {1,7} does not exist
+
+goroutine 1 [running]:
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*unionFind).find(0xc000014230, {0x1, 0x7})
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/union_find.go:52 +0x139
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*unionFind).find(0xc000014230, {0x0, 0x7})
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/union_find.go:55 +0x68
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*Go_).captureGroup.func1({0x0?, 0x3?})
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/go.go:138 +0x165
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*Go_).captureGroup(0xc00007e060, 0xc0001a0240)
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/go.go:145 +0x50
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*Go_).putStone(0xc00007e060, 0x2, 0x7)
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/go.go:172 +0x32f
+github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment.(*Go_).PlayAction(0xc00007e060, {0x4fa658?, 0xc0002d6930?})
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/internal/environment/go.go:184 +0x50
+main.emulate_game(0xc00007e060, {0x4fa5d8, 0x5b1140}, {0x4fa5d8, 0x5b1140})
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/cmd/play/main.go:19 +0x127
+main.main()
+	/home/alyx/Code/ENS/MCTS/GoGo power rangers !/cmd/play/main.go:32 +0x35
