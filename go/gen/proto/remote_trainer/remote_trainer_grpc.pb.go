@@ -2,13 +2,12 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v6.33.1
-// source: proto/position_evaluation.proto
+// source: proto/remote_trainer.proto
 
-package position_evaluation
+package remote_trainer
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PositionEvaluator_EvaluatePosition_FullMethodName = "/position_evaluation.PositionEvaluator/EvaluatePosition"
+	PositionEvaluator_EvaluatePosition_FullMethodName = "/remote_trainer.PositionEvaluator/EvaluatePosition"
 )
 
 // PositionEvaluatorClient is the client API for PositionEvaluator service.
@@ -109,7 +108,7 @@ func _PositionEvaluator_EvaluatePosition_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PositionEvaluator_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "position_evaluation.PositionEvaluator",
+	ServiceName: "remote_trainer.PositionEvaluator",
 	HandlerType: (*PositionEvaluatorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -118,5 +117,5 @@ var PositionEvaluator_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/position_evaluation.proto",
+	Metadata: "proto/remote_trainer.proto",
 }

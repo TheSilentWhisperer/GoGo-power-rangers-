@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.1
-// source: proto/position_evaluation.proto
+// source: proto/remote_trainer.proto
 
-package position_evaluation
+package remote_trainer
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -31,7 +31,7 @@ type EvaluatePositionRequest struct {
 
 func (x *EvaluatePositionRequest) Reset() {
 	*x = EvaluatePositionRequest{}
-	mi := &file_proto_position_evaluation_proto_msgTypes[0]
+	mi := &file_proto_remote_trainer_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *EvaluatePositionRequest) String() string {
 func (*EvaluatePositionRequest) ProtoMessage() {}
 
 func (x *EvaluatePositionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_position_evaluation_proto_msgTypes[0]
+	mi := &file_proto_remote_trainer_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *EvaluatePositionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvaluatePositionRequest.ProtoReflect.Descriptor instead.
 func (*EvaluatePositionRequest) Descriptor() ([]byte, []int) {
-	return file_proto_position_evaluation_proto_rawDescGZIP(), []int{0}
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *EvaluatePositionRequest) GetX() int64 {
@@ -82,7 +82,7 @@ type EvaluatePositionResponse struct {
 
 func (x *EvaluatePositionResponse) Reset() {
 	*x = EvaluatePositionResponse{}
-	mi := &file_proto_position_evaluation_proto_msgTypes[1]
+	mi := &file_proto_remote_trainer_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +94,7 @@ func (x *EvaluatePositionResponse) String() string {
 func (*EvaluatePositionResponse) ProtoMessage() {}
 
 func (x *EvaluatePositionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_position_evaluation_proto_msgTypes[1]
+	mi := &file_proto_remote_trainer_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +107,7 @@ func (x *EvaluatePositionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvaluatePositionResponse.ProtoReflect.Descriptor instead.
 func (*EvaluatePositionResponse) Descriptor() ([]byte, []int) {
-	return file_proto_position_evaluation_proto_rawDescGZIP(), []int{1}
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *EvaluatePositionResponse) GetZ() int64 {
@@ -117,39 +117,39 @@ func (x *EvaluatePositionResponse) GetZ() int64 {
 	return 0
 }
 
-var File_proto_position_evaluation_proto protoreflect.FileDescriptor
+var File_proto_remote_trainer_proto protoreflect.FileDescriptor
 
-const file_proto_position_evaluation_proto_rawDesc = "" +
+const file_proto_remote_trainer_proto_rawDesc = "" +
 	"\n" +
-	"\x1fproto/position_evaluation.proto\x12\x13position_evaluation\"5\n" +
+	"\x1aproto/remote_trainer.proto\x12\x0eremote_trainer\"5\n" +
 	"\x17EvaluatePositionRequest\x12\f\n" +
 	"\x01x\x18\x01 \x01(\x03R\x01x\x12\f\n" +
 	"\x01y\x18\x02 \x01(\x03R\x01y\"(\n" +
 	"\x18EvaluatePositionResponse\x12\f\n" +
-	"\x01z\x18\x01 \x01(\x03R\x01z2\x84\x01\n" +
-	"\x11PositionEvaluator\x12o\n" +
-	"\x10EvaluatePosition\x12,.position_evaluation.EvaluatePositionRequest\x1a-.position_evaluation.EvaluatePositionResponseB\x16Z\x14/position_evaluationb\x06proto3"
+	"\x01z\x18\x01 \x01(\x03R\x01z2z\n" +
+	"\x11PositionEvaluator\x12e\n" +
+	"\x10EvaluatePosition\x12'.remote_trainer.EvaluatePositionRequest\x1a(.remote_trainer.EvaluatePositionResponseB\x11Z\x0f/remote_trainerb\x06proto3"
 
 var (
-	file_proto_position_evaluation_proto_rawDescOnce sync.Once
-	file_proto_position_evaluation_proto_rawDescData []byte
+	file_proto_remote_trainer_proto_rawDescOnce sync.Once
+	file_proto_remote_trainer_proto_rawDescData []byte
 )
 
-func file_proto_position_evaluation_proto_rawDescGZIP() []byte {
-	file_proto_position_evaluation_proto_rawDescOnce.Do(func() {
-		file_proto_position_evaluation_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_position_evaluation_proto_rawDesc), len(file_proto_position_evaluation_proto_rawDesc)))
+func file_proto_remote_trainer_proto_rawDescGZIP() []byte {
+	file_proto_remote_trainer_proto_rawDescOnce.Do(func() {
+		file_proto_remote_trainer_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_remote_trainer_proto_rawDesc), len(file_proto_remote_trainer_proto_rawDesc)))
 	})
-	return file_proto_position_evaluation_proto_rawDescData
+	return file_proto_remote_trainer_proto_rawDescData
 }
 
-var file_proto_position_evaluation_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_proto_position_evaluation_proto_goTypes = []any{
-	(*EvaluatePositionRequest)(nil),  // 0: position_evaluation.EvaluatePositionRequest
-	(*EvaluatePositionResponse)(nil), // 1: position_evaluation.EvaluatePositionResponse
+var file_proto_remote_trainer_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_remote_trainer_proto_goTypes = []any{
+	(*EvaluatePositionRequest)(nil),  // 0: remote_trainer.EvaluatePositionRequest
+	(*EvaluatePositionResponse)(nil), // 1: remote_trainer.EvaluatePositionResponse
 }
-var file_proto_position_evaluation_proto_depIdxs = []int32{
-	0, // 0: position_evaluation.PositionEvaluator.EvaluatePosition:input_type -> position_evaluation.EvaluatePositionRequest
-	1, // 1: position_evaluation.PositionEvaluator.EvaluatePosition:output_type -> position_evaluation.EvaluatePositionResponse
+var file_proto_remote_trainer_proto_depIdxs = []int32{
+	0, // 0: remote_trainer.PositionEvaluator.EvaluatePosition:input_type -> remote_trainer.EvaluatePositionRequest
+	1, // 1: remote_trainer.PositionEvaluator.EvaluatePosition:output_type -> remote_trainer.EvaluatePositionResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -157,26 +157,26 @@ var file_proto_position_evaluation_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_proto_position_evaluation_proto_init() }
-func file_proto_position_evaluation_proto_init() {
-	if File_proto_position_evaluation_proto != nil {
+func init() { file_proto_remote_trainer_proto_init() }
+func file_proto_remote_trainer_proto_init() {
+	if File_proto_remote_trainer_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_position_evaluation_proto_rawDesc), len(file_proto_position_evaluation_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_remote_trainer_proto_rawDesc), len(file_proto_remote_trainer_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_position_evaluation_proto_goTypes,
-		DependencyIndexes: file_proto_position_evaluation_proto_depIdxs,
-		MessageInfos:      file_proto_position_evaluation_proto_msgTypes,
+		GoTypes:           file_proto_remote_trainer_proto_goTypes,
+		DependencyIndexes: file_proto_remote_trainer_proto_depIdxs,
+		MessageInfos:      file_proto_remote_trainer_proto_msgTypes,
 	}.Build()
-	File_proto_position_evaluation_proto = out.File
-	file_proto_position_evaluation_proto_goTypes = nil
-	file_proto_position_evaluation_proto_depIdxs = nil
+	File_proto_remote_trainer_proto = out.File
+	file_proto_remote_trainer_proto_goTypes = nil
+	file_proto_remote_trainer_proto_depIdxs = nil
 }

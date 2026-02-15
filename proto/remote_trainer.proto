@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package remote_trainer;
+
+option go_package = "/remote_trainer";
+
+service PositionEvaluator {
+    rpc EvaluatePosition (EvaluatePositionRequest) returns (EvaluatePositionResponse);
+}
+
+message EvaluatePositionRequest {
+    int64 x = 1;
+    int64 y = 2;
+}
+
+message EvaluatePositionResponse {
+    int64 z = 1;
+}
+

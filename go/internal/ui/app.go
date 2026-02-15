@@ -1,10 +1,12 @@
 package ui
 
 import (
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/position_evaluation"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/agents"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
 	"github.com/hajimehoshi/ebiten/v2"
+	"google.golang.org/grpc"
 )
 
 // Locked types (LockedBool, LockedGame, LockedValue) moved to internal/utils.
@@ -76,8 +78,18 @@ func NewApp(black_agent, white_agent agents.Agent, game *environment.Game, ui_me
 }
 
 func InitializeApp() *App {
-	var black_agent agents.Agent = agents.NewMCTSAgent(20000, 8, -0.7)
-	var white_agent agents.Agent = agents.NewMCTSAgent(20000, 8, -0.7)
+
+	//establish UDS connection to the position evaluation server
+	conn, err := grpc.NewClient("unix:///tmp/position_evaluation.sock")
+	if err != nil {
+		println("Error connecting to position evaluation server:", err.Error())
+		return nil
+	}
+
+	client := position_evaluation.NewPositionEvaluatorClient(conn)
+
+	var black_agent agents.Agent = agents.NewPUCTAgent(5000, 8, -0.7, client)
+	var white_agent agents.Agent = agents.NewMCTSAgent((000, 8, -0.7)
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width
