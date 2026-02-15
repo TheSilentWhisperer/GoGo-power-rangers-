@@ -71,7 +71,7 @@ func (uf *UnionFind) Find(pos Position) Position {
 	var parent Position
 	var ok bool
 	if parent, ok = uf.Parents[pos]; !ok {
-		panic(fmt.Sprintf("UnionFind::Find; stone at position {%d,%d} does not exist", pos.I, pos.J))
+		panic(fmt.Sprintf("UnionFind::Find; stone at position {%d,%d} does not exist", pos.First, pos.Second))
 	}
 	if parent != pos {
 		uf.Parents[pos] = uf.Find(parent) // Path compression
@@ -105,7 +105,7 @@ func (uf *UnionFind) Union(group1, group2 *Group, shared_liberties int) *Group {
 
 func (uf *UnionFind) RemoveStone(pos Position) {
 	if _, ok := uf.Parents[pos]; !ok {
-		panic(fmt.Sprintf("UnionFind::RemoveStone; stone at position {%d,%d} does not exist", pos.I, pos.J))
+		panic(fmt.Sprintf("UnionFind::RemoveStone; stone at position {%d,%d} does not exist", pos.First, pos.Second))
 	}
 	delete(uf.Parents, pos)
 }

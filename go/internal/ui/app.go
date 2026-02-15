@@ -7,6 +7,7 @@ import (
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
 	"github.com/hajimehoshi/ebiten/v2"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 // Locked types (LockedBool, LockedGame, LockedValue) moved to internal/utils.
@@ -80,16 +81,16 @@ func NewApp(black_agent, white_agent agents.Agent, game *environment.Game, ui_me
 func InitializeApp() *App {
 
 	//establish UDS connection to the position evaluation server
-	conn, err := grpc.NewClient("unix:///tmp/position_evaluation.sock")
+	conn, err := grpc.NewClient("unix:///tmp/position_evaluation.sock", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		println("Error connecting to position evaluation server:", err.Error())
 		return nil
 	}
 
-	client := remote_trainer.NewPositionEvaluatorClient(conn)
+	var _ remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
 
-	var black_agent agents.Agent = agents.NewPUCTAgent(5000, 8, -0.7, client)
-	var white_agent agents.Agent = agents.NewPUCTAgent(5000, 8, -0.7, client)
+	var black_agent agents.Agent = agents.NewUctAgent(5000, 8, -0.7)
+	var white_agent agents.Agent = agents.NewUctAgent(5000, 8, -0.7)
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width

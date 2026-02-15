@@ -66,7 +66,7 @@ func (board *Board) GetNeighbors(i, j int) map[Position]Stone {
 		NewPosition(0, 1),  // Right
 	}
 	for _, dir := range directions {
-		ni, nj := i+dir.I, j+dir.J
+		ni, nj := i+dir.First, j+dir.Second
 		if ni < 0 || ni >= board.Height || nj < 0 || nj >= board.Width {
 			continue
 		}
@@ -85,11 +85,11 @@ func (board *Board) GetCapturedStones(captured_group *Group) map[Position]Stone 
 	//define dfs function
 	dfs = func(pos Position) {
 		visited[pos] = true
-		captured_stones[pos] = board.Matrix[pos.I][pos.J]
+		captured_stones[pos] = board.Matrix[pos.First][pos.Second]
 		// Explore neighbors
-		var neighbors map[Position]Stone = board.GetNeighbors(pos.I, pos.J)
+		var neighbors map[Position]Stone = board.GetNeighbors(pos.First, pos.Second)
 		for neighbor, neighbor_stone := range neighbors {
-			if neighbor_stone == board.Matrix[pos.I][pos.J] {
+			if neighbor_stone == board.Matrix[pos.First][pos.Second] {
 				if !visited[neighbor] {
 					dfs(neighbor)
 				}

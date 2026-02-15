@@ -6,12 +6,12 @@ import "sync"
 // Pair uses fields I and J to be compatible with existing Position usages.
 
 type Pair[A any, B any] struct {
-	I A
-	J B
+	First  A
+	Second B
 }
 
-func NewPair[A any, B any](i A, j B) Pair[A, B] {
-	return Pair[A, B]{I: i, J: j}
+func NewPair[A any, B any](a A, b B) Pair[A, B] {
+	return Pair[A, B]{First: a, Second: b}
 }
 
 type Triple[A any, B any, C any] struct {

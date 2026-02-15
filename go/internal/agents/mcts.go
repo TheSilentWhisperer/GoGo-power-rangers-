@@ -8,42 +8,36 @@ import (
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
 )
 
-// LockedValue moved to internal/utils
-
-type ExpandTuple = utils.Triple[*MctsNode, int, *environment.Game]
-
-type BackpropagateTuple = utils.Triple[*MctsNode, int, *environment.Game]
-
-type MCTSAgent struct {
-	SimulationsPerMove  int
-	SimulationsDone     *utils.LockedValue
-	NbRoutines          int
-	Root                *MctsNode
-	ToBackpropagate     chan BackpropagateTuple
-	ToExpandAndEvaluate chan ExpandTuple
-	ResignThreshold     float64
+type MctsAgent struct {
+	SimulationsPerMove int
+	SimulationsDone    *utils.LockedValue
+	NbRoutines         int
+	Root               MctsNode
+	ToBackpropagate    chan utils.Triple[MctsNode, int, *environment.Game]
+	ResignThreshold    float64
+	Expander           Expander
 }
 
 // Constructor
-func NewMCTSAgent(simulations_per_move int, nb_routines int, resign_threshold float64) *MCTSAgent {
-	return &MCTSAgent{
-		SimulationsPerMove:  simulations_per_move,
-		NbRoutines:          nb_routines,
-		ToBackpropagate:     make(chan BackpropagateTuple, nb_routines),
-		ToExpandAndEvaluate: make(chan ExpandTuple, nb_routines),
-		ResignThreshold:     resign_threshold,
+func NewMctsAgent(simulations_per_move int, nb_routines int, resign_threshold float64, expander Expander) *MctsAgent {
+	return &MctsAgent{
+		SimulationsPerMove: simulations_per_move,
+		NbRoutines:         nb_routines,
+		ToBackpropagate:    make(chan utils.Triple[MctsNode, int, *environment.Game], nb_routines),
+		ResignThreshold:    resign_threshold,
+		Expander:           expander,
 	}
 }
 
 // Methods
-func (agent *MCTSAgent) GetFinalAction(legal_actions []environment.Action) environment.Action {
+func (agent *MctsAgent) GetFinalAction(legal_actions []environment.Action) environment.Action {
 	// get the argmax of self.root.N
 	var best_action_index int = 0
-	var max_visits int = agent.Root.N[0]
-	var max_value float64 = agent.Root.Q[0]
-	for action_index, visits := range agent.Root.N {
-		if agent.Root.Q[action_index] > max_value {
-			max_value = agent.Root.Q[action_index]
+	var max_visits int = agent.Root.GetN()[0]
+	var max_value float64 = agent.Root.GetQ()[0]
+	for action_index, visits := range agent.Root.GetN() {
+		if agent.Root.GetQ()[action_index] > max_value {
+			max_value = agent.Root.GetQ()[action_index]
 		}
 		if visits > max_visits {
 			max_visits = visits
@@ -58,65 +52,35 @@ func (agent *MCTSAgent) GetFinalAction(legal_actions []environment.Action) envir
 	return legal_actions[best_action_index]
 }
 
-func (agent *MCTSAgent) SelectLeaf(node *MctsNode, game *environment.Game) ExpandTuple {
+func (agent *MctsAgent) SelectLeaf(node MctsNode, game *environment.Game) utils.Triple[MctsNode, int, *environment.Game] {
 	var best_action_idx int = node.SelectBestChildIndex()
 	if game.IsTerminal() {
 		return utils.NewTriple(node, -1, game.DeepCopy())
 	}
-	if node.Children[best_action_idx] == nil {
+	if node.GetChildren()[best_action_idx] == nil {
 		return utils.NewTriple(node, best_action_idx, game.DeepCopy())
 	}
 	game.PlayAction(game.LegalActions[best_action_idx])
-	return agent.SelectLeaf(node.Children[best_action_idx], game)
+	return agent.SelectLeaf(node.GetChildren()[best_action_idx], game)
 }
 
-func (agent *MCTSAgent) Expand(node *MctsNode, child_idx int, game *environment.Game) {
-	game.PlayAction(game.LegalActions[child_idx])
-	var child_node *MctsNode = NewMctsNode(game, node, child_idx)
-	node.Children[child_idx] = child_node
-}
-
-func (agent *MCTSAgent) Evaluate(game *environment.Game) int {
-	var current_player environment.Stone = game.Board.CurrentPlayer
-	var both_players Agent = NewRandomAgent()
-	for !game.IsTerminal() {
-		game.PlayAction(both_players.SelectAction(game))
-	}
-	if game.GetWinner() == environment.Empty {
-		return 0 // Draw
-	} else if game.GetWinner() == current_player {
-		return 1 // Win
-	} else {
-		return -1 // Loss
-	}
-}
-
-func (agent *MCTSAgent) ExpandAndEvaluate(to_expand ExpandTuple, game *environment.Game) int {
-	agent.Expand(to_expand.First, to_expand.Second, game)
-	// Playing the action to reach the expanded child made so the opponent (expanded child) had this final value
-	var value int = agent.Evaluate(game)
-	// So the value for the parent node is the negation of this value
-	return -value
-}
-
-func (agent *MCTSAgent) Backpropagate(to_backpropagate BackpropagateTuple) {
-	var node *MctsNode = to_backpropagate.First
+func (agent *MctsAgent) Backpropagate(to_backpropagate utils.Triple[MctsNode, int, *environment.Game]) {
+	var node MctsNode = to_backpropagate.First
 	var value int = to_backpropagate.Second
-	if node.Parent != nil {
-		node.Parent.UpdateStats(value, node.Idx)
-		agent.Backpropagate(utils.NewTriple(node.Parent, -value, (*environment.Game)(nil)))
+	if node.GetParent() != nil {
+		node.GetParent().UpdateStats(value, node.GetIdx())
+		agent.Backpropagate(utils.NewTriple(node.GetParent(), -value, (*environment.Game)(nil)))
 	}
 }
 
-func (agent *MCTSAgent) ExploreTree(wg *sync.WaitGroup, game *environment.Game) {
+func (agent *MctsAgent) ExploreTree(wg *sync.WaitGroup, game *environment.Game) {
 
 	defer wg.Done()
 	for agent.SimulationsDone.Get() < agent.SimulationsPerMove {
 		select {
 		case to_backpropagate := <-agent.ToBackpropagate:
 			agent.Backpropagate(to_backpropagate)
-		case to_expand := <-agent.ToExpandAndEvaluate:
-			println("Expanding and evaluating a node...")
+		case to_expand := <-agent.Expander.GetToExpand():
 			if to_expand.Second == -1 {
 				// Terminal node reached, no expansion
 				agent.SimulationsDone.Incr() // We are sure to expand a new node
@@ -135,26 +99,32 @@ func (agent *MCTSAgent) ExploreTree(wg *sync.WaitGroup, game *environment.Game) 
 				continue
 			}
 			// atomic check to avoid expanding the same node multiple times
-			if atomic.CompareAndSwapInt32((&to_expand.First.IsExpanded[to_expand.Second]), 0, 1) {
-				agent.SimulationsDone.Incr()                                        // We are sure to expand a new node
-				var value int = agent.ExpandAndEvaluate(to_expand, to_expand.Third) // Value of the game for the parent of the backpropagated node (expanded node)
-				var expanded_child *MctsNode = to_expand.First.Children[to_expand.Second]
+			if atomic.CompareAndSwapInt32((&to_expand.First.GetIsExpanded()[to_expand.Second]), 0, 1) {
+				agent.SimulationsDone.Incr()                                // We are sure to expand a new node
+				var value int = agent.Expander.ExpandAndEvaluate(to_expand) // Value of the game for the parent of the backpropagated node (expanded node)
+				var expanded_child MctsNode = to_expand.First.GetChildren()[to_expand.Second]
 				agent.ToBackpropagate <- utils.NewTriple(expanded_child, value, (*environment.Game)(nil))
 			}
 
 		default:
 			var game_copy *environment.Game = game.DeepCopy()
-			var to_expand ExpandTuple = agent.SelectLeaf(agent.Root, game_copy)
-			agent.ToExpandAndEvaluate <- to_expand
+			var to_expand utils.Triple[MctsNode, int, *environment.Game] = agent.SelectLeaf(agent.Root, game_copy)
+			agent.Expander.GetToExpand() <- to_expand
 		}
 	}
 }
 
-func (agent *MCTSAgent) SelectAction(game *environment.Game) environment.Action {
+func (agent *MctsAgent) SelectAction(game *environment.Game) environment.Action {
 
 	// reset MCTS tree
-	agent.Root = NewMctsNode(game, nil, -1)
-	agent.SimulationsDone = utils.NewLockedValue(0)
+	switch expander := agent.Expander.(type) {
+	case *UctExpander:
+		agent.Root = NewUctNode(game, nil, -1)
+	case *PuctExpander:
+		agent.Root = NewPuctNode(game, nil, -1, expander.Client)
+	default:
+		panic("Unknown expander type")
+	}
 
 	var wg sync.WaitGroup
 	wg.Add(agent.NbRoutines)

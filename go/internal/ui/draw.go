@@ -62,7 +62,7 @@ func (app *App) DrawGrid(ebiten_image *ebiten.Image) {
 	// Draw highlighted intersections
 	var highlighted_positions []environment.Position = app.HighlightedIntersections()
 	for _, pos := range highlighted_positions {
-		var cx, cy float32 = app.UIMetadata.Margin.Left + app.CellSize()*float32(pos.J), app.UIMetadata.Margin.Top + app.CellSize()*float32(pos.I)
+		var cx, cy float32 = app.UIMetadata.Margin.Left + app.CellSize()*float32(pos.Second), app.UIMetadata.Margin.Top + app.CellSize()*float32(pos.First)
 		var radius float32 = app.CellSize() * app.UIMetadata.HighlightedIntersectionsRadiusScale
 		vector.FillCircle(ebiten_image, cx, cy, radius, line_color, antialias)
 	}

@@ -70,11 +70,11 @@ func (game *Game) ComputeScore() Score {
 		for neighbor, neighbor_stone := range neighbors {
 			switch neighbor_stone {
 			case Empty:
-				if !visited[neighbor.I][neighbor.J] {
-					dfs(neighbor.I, neighbor.J)
+				if !visited[neighbor.First][neighbor.Second] {
+					dfs(neighbor.First, neighbor.Second)
 				}
-				is_black[i][j] = is_black[neighbor.I][neighbor.J] || is_black[i][j]
-				is_white[i][j] = is_white[neighbor.I][neighbor.J] || is_white[i][j]
+				is_black[i][j] = is_black[neighbor.First][neighbor.Second] || is_black[i][j]
+				is_white[i][j] = is_white[neighbor.First][neighbor.Second] || is_white[i][j]
 			case Black:
 				is_black[i][j] = true
 			case White:
@@ -226,7 +226,7 @@ func (game *Game) ComputeLegalActions() {
 func (game *Game) CaptureGroup(captured_group *Group) {
 	var captured_stones map[Position]Stone = game.Board.GetCapturedStones(captured_group)
 	for pos, stone := range captured_stones {
-		var i, j int = pos.I, pos.J
+		var i, j int = pos.First, pos.Second
 		// Remove stone from board and update board hash
 		game.Board.Matrix[i][j] = Empty
 		game.BoardHasher.UpdateHash(i, j, stone, Empty, false)
@@ -320,7 +320,7 @@ func (game *Game) PlayAction(action Action) {
 // Debugging and Display
 func (game *Game) DebugLiberties() {
 	for root_pos, group := range game.Board.UnionFind.Groups {
-		println("Group at (", root_pos.I, ",", root_pos.J, ") has", group.Liberties, "liberties")
+		println("Group at (", root_pos.First, ",", root_pos.Second, ") has", group.Liberties, "liberties")
 	}
 }
 

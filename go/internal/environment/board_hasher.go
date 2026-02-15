@@ -82,11 +82,11 @@ func (bh *BoardHasher) ComputeResultingHash(captured_stones map[Position]Stone, 
 	var resulting_hash uint64 = bh.BoardHash
 	// Remove captured stones
 	for pos, stone := range captured_stones {
-		var i, j int = pos.I, pos.J
+		var i, j int = pos.First, pos.Second
 		resulting_hash ^= bh.ZobristTable[i][j][int(stone)%2]
 	}
 	// Add placed stone
-	var i, j int = placed_pos.I, placed_pos.J
+	var i, j int = placed_pos.First, placed_pos.Second
 	resulting_hash ^= bh.ZobristTable[i][j][int(placed_stone)%2]
 	// Update player hash
 	resulting_hash ^= bh.PlayerHash
