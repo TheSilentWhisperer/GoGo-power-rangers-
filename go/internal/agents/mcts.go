@@ -1,7 +1,6 @@
 package agents
 
 import (
-	"fmt"
 	"sync"
 	"sync/atomic"
 
@@ -51,8 +50,6 @@ func (agent *MCTSAgent) GetFinalAction(legal_actions []environment.Action) envir
 			best_action_index = action_index
 		}
 	}
-	// print in decimal format the max value for debugging purposes
-	fmt.Printf("Best action index: %d, max value: %.4f, visits: %d\n", best_action_index, max_value, max_visits)
 
 	if max_value <= agent.ResignThreshold {
 		return environment.Resign{}
@@ -119,6 +116,7 @@ func (agent *MCTSAgent) ExploreTree(wg *sync.WaitGroup, game *environment.Game) 
 		case to_backpropagate := <-agent.ToBackpropagate:
 			agent.Backpropagate(to_backpropagate)
 		case to_expand := <-agent.ToExpandAndEvaluate:
+			println("Expanding and evaluating a node...")
 			if to_expand.Second == -1 {
 				// Terminal node reached, no expansion
 				agent.SimulationsDone.Incr() // We are sure to expand a new node

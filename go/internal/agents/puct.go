@@ -3,30 +3,20 @@ package agents
 import (
 	"context"
 
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
 )
 
 type PUCTAgent struct {
-	SimulationsPerMove  int
-	SimulationsDone     *utils.LockedValue
-	NbRoutines          int
-	Root                *MctsNode
-	ToBackpropagate     chan BackpropagateTuple
-	ToExpandAndEvaluate chan ExpandTuple
-	ResignThreshold     float64
-	Client              position_evaluation.PositionEvaluatorClient
+	*MCTSAgent
+	Client remote_trainer.PositionEvaluatorClient
 }
 
 // Constructor
-func NewPUCTAgent(simulations_per_move int, nb_routines int, resign_threshold float64, client position_evaluation.PositionEvaluatorClient) *PUCTAgent {
+func NewPUCTAgent(simulations_per_move int, nb_routines int, resign_threshold float64, client remote_trainer.PositionEvaluatorClient) *PUCTAgent {
 	return &PUCTAgent{
-		SimulationsPerMove:  simulations_per_move,
-		NbRoutines:          nb_routines,
-		ToBackpropagate:     make(chan BackpropagateTuple, nb_routines),
-		ToExpandAndEvaluate: make(chan ExpandTuple, nb_routines),
-		ResignThreshold:     resign_threshold,
-		Client:              client,
+		MCTSAgent: NewMCTSAgent(simulations_per_move, nb_routines, resign_threshold),
+		Client:    client,
 	}
 }
 
@@ -42,7 +32,7 @@ func (agent *PUCTAgent) Expand(node *MctsNode, action_idx int, game *environment
 
 func (agent *PUCTAgent) Evaluate(simulations_per_move int, nb_routines int) int {
 	// just use a dummy evaluation for now, we will replace this with a neural network evaluation later
-	var request position_evaluation.EvaluatePositionRequest = position_evaluation.EvaluatePositionRequest{
+	var request remote_trainer.EvaluatePositionRequest = remote_trainer.EvaluatePositionRequest{
 		X: 31,
 		Y: 12,
 	}

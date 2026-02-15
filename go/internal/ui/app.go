@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/position_evaluation"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/agents"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
@@ -86,10 +86,10 @@ func InitializeApp() *App {
 		return nil
 	}
 
-	client := position_evaluation.NewPositionEvaluatorClient(conn)
+	client := remote_trainer.NewPositionEvaluatorClient(conn)
 
 	var black_agent agents.Agent = agents.NewPUCTAgent(5000, 8, -0.7, client)
-	var white_agent agents.Agent = agents.NewMCTSAgent((000, 8, -0.7)
+	var white_agent agents.Agent = agents.NewPUCTAgent(5000, 8, -0.7, client)
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width
