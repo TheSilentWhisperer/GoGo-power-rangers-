@@ -1,8 +1,8 @@
 package ui
 
 import (
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/agents"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/agents"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 

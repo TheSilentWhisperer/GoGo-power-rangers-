@@ -4,8 +4,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
 )
 
 type MctsAgent struct {

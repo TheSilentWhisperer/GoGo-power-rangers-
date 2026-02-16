@@ -1,10 +1,10 @@
 package ui
 
 import (
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/agents"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/agents"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
 	"github.com/hajimehoshi/ebiten/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

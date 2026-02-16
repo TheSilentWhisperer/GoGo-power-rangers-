@@ -1,6 +1,6 @@
 package agents
 
-import "github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+import "github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 
 type MctsNode interface {
 	Reset(game *environment.Game)

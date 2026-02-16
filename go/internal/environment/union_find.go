@@ -3,7 +3,7 @@ package environment
 import (
 	"fmt"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
 )
 
 // Position is a 2D board coordinate. Use tuples.Pair to represent it.

@@ -1,4 +1,4 @@
-module github.com/TheSilentWhisperer/GoGo-power-rangers-
+module github.com/TheSilentWhisperer/GoGo-power-rangers-/go
 
 go 1.24.0
 

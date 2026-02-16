@@ -3,9 +3,9 @@ package agents
 import (
 	"context"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
 )
 
 // LockedValue moved to internal/utils

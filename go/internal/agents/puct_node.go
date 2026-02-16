@@ -3,7 +3,7 @@ package agents
 import (
 	"math"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 )
 
 type PuctNode struct {

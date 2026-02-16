@@ -3,7 +3,7 @@ package agents
 import (
 	"math/rand"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 )
 
 type RandomAgent struct{}

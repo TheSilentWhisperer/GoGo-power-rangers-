@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/ui"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/ui"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
