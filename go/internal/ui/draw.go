@@ -3,7 +3,7 @@ package ui
 import (
 	"image/color"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"

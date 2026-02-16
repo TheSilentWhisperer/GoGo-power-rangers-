@@ -1,8 +1,8 @@
 package agents
 
 import (
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
 )
 
 type Expander interface {
