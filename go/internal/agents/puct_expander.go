@@ -32,7 +32,7 @@ func (expander *PuctExpander) Expand(to_expand utils.Triple[MctsNode, int, *envi
 	var child_idx int = to_expand.Second
 	var game *environment.Game = to_expand.Third
 	game.PlayAction(game.LegalActions[child_idx])
-	var child_node MctsNode = NewPuctNode(game, node, child_idx, expander.Client) // We will set the priors later when we have the neural network evaluation
+	var child_node MctsNode = NewPuctNode(game, node, child_idx) // We will set the priors later when we have the neural network evaluation
 	node.GetChildren()[child_idx] = child_node
 }
 

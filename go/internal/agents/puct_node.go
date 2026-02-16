@@ -1,21 +1,18 @@
 package agents
 
 import (
-	"context"
 	"math"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
 	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
 )
 
 type PuctNode struct {
 	*UctNode
-	P      []float64 // Prior probabilities for each action
-	Client remote_trainer.PositionEvaluatorClient
+	P []float64 // Prior probabilities for each action
 }
 
 // Constructor
-func NewPuctNode(game *environment.Game, parent MctsNode, idx int, client remote_trainer.PositionEvaluatorClient) *PuctNode {
+func NewPuctNode(game *environment.Game, parent MctsNode, idx int) *PuctNode {
 	return &PuctNode{
 		UctNode: &UctNode{
 			Parent:     parent,
@@ -27,8 +24,7 @@ func NewPuctNode(game *environment.Game, parent MctsNode, idx int, client remote
 			Children:   make([]MctsNode, len(game.LegalActions)),
 			IsExpanded: make([]int32, len(game.LegalActions)),
 		},
-		P:      make([]float64, len(game.LegalActions)),
-		Client: client,
+		P: make([]float64, len(game.LegalActions)),
 	}
 }
 
@@ -57,32 +53,8 @@ func (node *PuctNode) GetIsExpanded() []int32 {
 	return node.IsExpanded
 }
 
-// Methods
-func (node *PuctNode) Reset(game *environment.Game) {
-	node.Mutex.Lock()
-	defer node.Mutex.Unlock()
-
-	node.TotalN = 0
-	for i := 0; i < node.K; i++ {
-		node.N[i] = 0
-		node.Q[i] = 0
-		node.Children[i] = nil
-		node.IsExpanded[i] = 0
-	}
-
-	var request remote_trainer.EvaluatePositionRequest = remote_trainer.EvaluatePositionRequest{
-		X: 31,
-		Y: 12,
-	}
-	response, err := node.Client.EvaluatePosition(context.Background(), &request)
-	if err != nil {
-		println("Error evaluating position:", err.Error())
-		return
-	}
-	var _ int64 = response.Z
-
-	var priors []float64 = make([]float64, 0)
-	node.P = priors
+func (node *PuctNode) SetPriors(priors []float64) {
+	copy(node.P, priors)
 }
 
 func (node *PuctNode) SelectBestChildIndex() int {

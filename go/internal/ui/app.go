@@ -87,10 +87,10 @@ func InitializeApp() *App {
 		return nil
 	}
 
-	var _ remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
+	var expander remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
 
-	var black_agent agents.Agent = agents.NewUctAgent(5000, 8, -0.7)
-	var white_agent agents.Agent = agents.NewUctAgent(5000, 8, -0.7)
+	var black_agent agents.Agent = agents.NewPuctAgent(5000, 8, -0.7, expander)
+	var white_agent agents.Agent = agents.NewPuctAgent(5000, 8, -0.7, expander)
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width

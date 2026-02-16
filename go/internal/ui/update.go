@@ -33,7 +33,6 @@ func (app *App) Update() error {
 		// We are the first to initiate the move search, start the goroutine
 		// to compute the move in the background
 		go func() {
-			println("Move search initiated for player", app.Game.Get().Board.CurrentPlayer)
 			defer func() { <-app.MoveSearchInitiated }() // Ensure that we reset the channel when done
 
 			app.IsThinking.Set(true)

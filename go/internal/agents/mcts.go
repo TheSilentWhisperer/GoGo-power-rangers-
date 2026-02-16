@@ -22,6 +22,7 @@ type MctsAgent struct {
 func NewMctsAgent(simulations_per_move int, nb_routines int, resign_threshold float64, expander Expander) *MctsAgent {
 	return &MctsAgent{
 		SimulationsPerMove: simulations_per_move,
+		SimulationsDone:    utils.NewLockedValue(0),
 		NbRoutines:         nb_routines,
 		ToBackpropagate:    make(chan utils.Triple[MctsNode, int, *environment.Game], nb_routines),
 		ResignThreshold:    resign_threshold,
@@ -116,15 +117,22 @@ func (agent *MctsAgent) ExploreTree(wg *sync.WaitGroup, game *environment.Game) 
 
 func (agent *MctsAgent) SelectAction(game *environment.Game) environment.Action {
 
-	// reset MCTS tree
-	switch expander := agent.Expander.(type) {
+	// reset MCTS tree and initialize priors if needed
+	switch agent.Expander.(type) {
 	case *UctExpander:
 		agent.Root = NewUctNode(game, nil, -1)
 	case *PuctExpander:
-		agent.Root = NewPuctNode(game, nil, -1, expander.Client)
+		agent.Root = NewPuctNode(game, nil, -1)
 	default:
 		panic("Unknown expander type")
 	}
+	switch root := agent.Root.(type) {
+	case *PuctNode:
+		root.SetPriors(make([]float64, len(game.LegalActions))) // We will set the priors later when we have the neural network evaluation
+	}
+
+	// reset simulations done
+	agent.SimulationsDone = utils.NewLockedValue(0)
 
 	var wg sync.WaitGroup
 	wg.Add(agent.NbRoutines)
