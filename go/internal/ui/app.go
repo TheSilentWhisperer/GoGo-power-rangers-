@@ -81,7 +81,7 @@ func NewApp(black_agent, white_agent agents.Agent, game *environment.Game, ui_me
 func InitializeApp() *App {
 
 	//establish UDS connection to the position evaluation server
-	conn, err := grpc.NewClient("unix:///tmp/position_evaluation.sock", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("unix:///tmp/position_evaluator.sock", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		println("Error connecting to position evaluation server:", err.Error())
 		return nil
