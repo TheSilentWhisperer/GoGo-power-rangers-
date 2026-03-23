@@ -4,32 +4,34 @@ import (
 	"math"
 	"sync"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 )
 
 type UctNode struct {
-	Mutex      sync.Mutex
-	Parent     MctsNode
-	Idx        int       // Index of the action taken to reach this node from its parent
-	K          int       // Number of legal actions
-	TotalN     int       // Total visit count
-	N          []int     // Visit counts for each action
-	Q          []float64 // Total reward for each action
-	Children   []MctsNode
-	IsExpanded []int32 // Atomic boolean flags to indicate if child nodes are expanded
+	Mutex        sync.Mutex
+	Parent       MctsNode
+	Idx          int       // Index of the action taken to reach this node from its parent
+	K            int       // Number of legal actions
+	TotalN       int       // Total visit count
+	N            []int     // Visit counts for each action
+	Q            []float64 // Total reward for each action
+	Children     []MctsNode
+	IsEvaluating []bool
+	IsTerminal   []bool
 }
 
 // Constructor
 func NewUctNode(game *environment.Game, parent MctsNode, idx int) *UctNode {
 	return &UctNode{
-		Parent:     parent,
-		Idx:        idx,
-		K:          len(game.LegalActions),
-		TotalN:     0,
-		N:          make([]int, len(game.LegalActions)),
-		Q:          make([]float64, len(game.LegalActions)),
-		Children:   make([]MctsNode, len(game.LegalActions)),
-		IsExpanded: make([]int32, len(game.LegalActions)),
+		Parent:       parent,
+		Idx:          idx,
+		K:            len(game.LegalActions),
+		TotalN:       0,
+		N:            make([]int, len(game.LegalActions)),
+		Q:            make([]float64, len(game.LegalActions)),
+		Children:     make([]MctsNode, len(game.LegalActions)),
+		IsEvaluating: make([]bool, len(game.LegalActions)),
+		IsTerminal:   make([]bool, len(game.LegalActions)),
 	}
 }
 
@@ -54,21 +56,42 @@ func (node *UctNode) GetChildren() []MctsNode {
 	return node.Children
 }
 
-func (node *UctNode) GetIsExpanded() []int32 {
-	return node.IsExpanded
+func (node *UctNode) GetIsEvaluating(action_idx int) bool {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	return node.IsEvaluating[action_idx]
+}
+
+func (node *UctNode) SetIsEvaluating(action_idx int, value bool) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	node.IsEvaluating[action_idx] = value
+}
+
+func (node *UctNode) GetIsTerminal(action_idx int) bool {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	return node.IsTerminal[action_idx]
+}
+
+func (node *UctNode) SetIsTerminal(action_idx int, value bool) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	node.IsTerminal[action_idx] = value
 }
 
 // Methods
-func (node *UctNode) Reset(game *environment.Game) {
+func (node *UctNode) ExpandChild(child_idx int, game *environment.Game) {
 	node.Mutex.Lock()
 	defer node.Mutex.Unlock()
 
-	node.TotalN = 0
-	for i := 0; i < node.K; i++ {
-		node.N[i] = 0
-		node.Q[i] = 0
-		node.Children[i] = nil
-		node.IsExpanded[i] = 0
+	if game.IsTerminal() {
+		node.IsTerminal[child_idx] = true
+	}
+
+	if node.Children[child_idx] == nil {
+		node.Children[child_idx] = NewUctNode(game, node, child_idx)
+		node.IsEvaluating[child_idx] = true
 	}
 }
 
@@ -79,7 +102,7 @@ func (node *UctNode) SelectBestChildIndex() int {
 	//By default, we use UCT (Upper Confidence Bound for Trees) with exploration constant sqrt(2)
 
 	var c float64 = math.Sqrt(2)
-	var best_action_idx int
+	var best_action_idx int = -1
 	var best_value float64 = math.Inf(-1)
 	for action_idx := 0; action_idx < node.K; action_idx++ {
 		var exploration_term float64
@@ -103,7 +126,7 @@ func (node *UctNode) SelectBestChildIndex() int {
 	return best_action_idx
 }
 
-func (node *UctNode) UpdateStats(value int, action_idx int) {
+func (node *UctNode) UpdateStats(value float64, action_idx int) {
 	node.Mutex.Lock()
 	defer node.Mutex.Unlock()
 

@@ -9,6 +9,7 @@ package remote_trainer
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,28 +22,34 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type EvaluatePositionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	X             int64                  `protobuf:"varint,1,opt,name=x,proto3" json:"x,omitempty"`
-	Y             int64                  `protobuf:"varint,2,opt,name=y,proto3" json:"y,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type EvaluationRequest struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	RequestId             int64                  `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	HistoryLength         int64                  `protobuf:"varint,2,opt,name=history_length,json=historyLength,proto3" json:"history_length,omitempty"`
+	Height                int64                  `protobuf:"varint,3,opt,name=height,proto3" json:"height,omitempty"`
+	Width                 int64                  `protobuf:"varint,4,opt,name=width,proto3" json:"width,omitempty"`
+	FlattenedBoardHistory []int64                `protobuf:"varint,5,rep,packed,name=flattened_board_history,json=flattenedBoardHistory,proto3" json:"flattened_board_history,omitempty"`
+	BlackToPlay           int64                  `protobuf:"varint,6,opt,name=black_to_play,json=blackToPlay,proto3" json:"black_to_play,omitempty"`
+	EnemyPassed           int64                  `protobuf:"varint,7,opt,name=enemy_passed,json=enemyPassed,proto3" json:"enemy_passed,omitempty"`
+	LegalActionsMask      []bool                 `protobuf:"varint,8,rep,packed,name=legal_actions_mask,json=legalActionsMask,proto3" json:"legal_actions_mask,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
-func (x *EvaluatePositionRequest) Reset() {
-	*x = EvaluatePositionRequest{}
+func (x *EvaluationRequest) Reset() {
+	*x = EvaluationRequest{}
 	mi := &file_proto_remote_trainer_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *EvaluatePositionRequest) String() string {
+func (x *EvaluationRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EvaluatePositionRequest) ProtoMessage() {}
+func (*EvaluationRequest) ProtoMessage() {}
 
-func (x *EvaluatePositionRequest) ProtoReflect() protoreflect.Message {
+func (x *EvaluationRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_remote_trainer_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -54,46 +61,90 @@ func (x *EvaluatePositionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EvaluatePositionRequest.ProtoReflect.Descriptor instead.
-func (*EvaluatePositionRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use EvaluationRequest.ProtoReflect.Descriptor instead.
+func (*EvaluationRequest) Descriptor() ([]byte, []int) {
 	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *EvaluatePositionRequest) GetX() int64 {
+func (x *EvaluationRequest) GetRequestId() int64 {
 	if x != nil {
-		return x.X
+		return x.RequestId
 	}
 	return 0
 }
 
-func (x *EvaluatePositionRequest) GetY() int64 {
+func (x *EvaluationRequest) GetHistoryLength() int64 {
 	if x != nil {
-		return x.Y
+		return x.HistoryLength
 	}
 	return 0
 }
 
-type EvaluatePositionResponse struct {
+func (x *EvaluationRequest) GetHeight() int64 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *EvaluationRequest) GetWidth() int64 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *EvaluationRequest) GetFlattenedBoardHistory() []int64 {
+	if x != nil {
+		return x.FlattenedBoardHistory
+	}
+	return nil
+}
+
+func (x *EvaluationRequest) GetBlackToPlay() int64 {
+	if x != nil {
+		return x.BlackToPlay
+	}
+	return 0
+}
+
+func (x *EvaluationRequest) GetEnemyPassed() int64 {
+	if x != nil {
+		return x.EnemyPassed
+	}
+	return 0
+}
+
+func (x *EvaluationRequest) GetLegalActionsMask() []bool {
+	if x != nil {
+		return x.LegalActionsMask
+	}
+	return nil
+}
+
+type EvaluationResponseData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Z             int64                  `protobuf:"varint,1,opt,name=z,proto3" json:"z,omitempty"`
+	RequestId     int64                  `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	Value         float64                `protobuf:"fixed64,2,opt,name=value,proto3" json:"value,omitempty"`
+	Priors        []float64              `protobuf:"fixed64,3,rep,packed,name=priors,proto3" json:"priors,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *EvaluatePositionResponse) Reset() {
-	*x = EvaluatePositionResponse{}
+func (x *EvaluationResponseData) Reset() {
+	*x = EvaluationResponseData{}
 	mi := &file_proto_remote_trainer_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *EvaluatePositionResponse) String() string {
+func (x *EvaluationResponseData) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EvaluatePositionResponse) ProtoMessage() {}
+func (*EvaluationResponseData) ProtoMessage() {}
 
-func (x *EvaluatePositionResponse) ProtoReflect() protoreflect.Message {
+func (x *EvaluationResponseData) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_remote_trainer_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -105,30 +156,103 @@ func (x *EvaluatePositionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EvaluatePositionResponse.ProtoReflect.Descriptor instead.
-func (*EvaluatePositionResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use EvaluationResponseData.ProtoReflect.Descriptor instead.
+func (*EvaluationResponseData) Descriptor() ([]byte, []int) {
 	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *EvaluatePositionResponse) GetZ() int64 {
+func (x *EvaluationResponseData) GetRequestId() int64 {
 	if x != nil {
-		return x.Z
+		return x.RequestId
 	}
 	return 0
+}
+
+func (x *EvaluationResponseData) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+func (x *EvaluationResponseData) GetPriors() []float64 {
+	if x != nil {
+		return x.Priors
+	}
+	return nil
+}
+
+type EvaluationResponse struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Data          *EvaluationResponseData `protobuf:"bytes,2,opt,name=data,proto3,oneof" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EvaluationResponse) Reset() {
+	*x = EvaluationResponse{}
+	mi := &file_proto_remote_trainer_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EvaluationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EvaluationResponse) ProtoMessage() {}
+
+func (x *EvaluationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_remote_trainer_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EvaluationResponse.ProtoReflect.Descriptor instead.
+func (*EvaluationResponse) Descriptor() ([]byte, []int) {
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *EvaluationResponse) GetData() *EvaluationResponseData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
 }
 
 var File_proto_remote_trainer_proto protoreflect.FileDescriptor
 
 const file_proto_remote_trainer_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/remote_trainer.proto\x12\x0eremote_trainer\"5\n" +
-	"\x17EvaluatePositionRequest\x12\f\n" +
-	"\x01x\x18\x01 \x01(\x03R\x01x\x12\f\n" +
-	"\x01y\x18\x02 \x01(\x03R\x01y\"(\n" +
-	"\x18EvaluatePositionResponse\x12\f\n" +
-	"\x01z\x18\x01 \x01(\x03R\x01z2z\n" +
-	"\x11PositionEvaluator\x12e\n" +
-	"\x10EvaluatePosition\x12'.remote_trainer.EvaluatePositionRequest\x1a(.remote_trainer.EvaluatePositionResponseB\x11Z\x0f/remote_trainerb\x06proto3"
+	"\x1aproto/remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xb4\x02\n" +
+	"\x11EvaluationRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\x03R\trequestId\x12%\n" +
+	"\x0ehistory_length\x18\x02 \x01(\x03R\rhistoryLength\x12\x16\n" +
+	"\x06height\x18\x03 \x01(\x03R\x06height\x12\x14\n" +
+	"\x05width\x18\x04 \x01(\x03R\x05width\x126\n" +
+	"\x17flattened_board_history\x18\x05 \x03(\x03R\x15flattenedBoardHistory\x12\"\n" +
+	"\rblack_to_play\x18\x06 \x01(\x03R\vblackToPlay\x12!\n" +
+	"\fenemy_passed\x18\a \x01(\x03R\venemyPassed\x12,\n" +
+	"\x12legal_actions_mask\x18\b \x03(\bR\x10legalActionsMask\"e\n" +
+	"\x16EvaluationResponseData\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\x03R\trequestId\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x01R\x05value\x12\x16\n" +
+	"\x06priors\x18\x03 \x03(\x01R\x06priors\"^\n" +
+	"\x12EvaluationResponse\x12?\n" +
+	"\x04data\x18\x02 \x01(\v2&.remote_trainer.EvaluationResponseDataH\x00R\x04data\x88\x01\x01B\a\n" +
+	"\x05_data2\xf3\x01\n" +
+	"\x11PositionEvaluator\x12M\n" +
+	"\x10EvaluatePosition\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
+	"\x12RetrieveEvaluation\x12\x16.google.protobuf.Empty\x1a\".remote_trainer.EvaluationResponse\x12=\n" +
+	"\vResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3"
 
 var (
 	file_proto_remote_trainer_proto_rawDescOnce sync.Once
@@ -142,19 +266,26 @@ func file_proto_remote_trainer_proto_rawDescGZIP() []byte {
 	return file_proto_remote_trainer_proto_rawDescData
 }
 
-var file_proto_remote_trainer_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_remote_trainer_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_proto_remote_trainer_proto_goTypes = []any{
-	(*EvaluatePositionRequest)(nil),  // 0: remote_trainer.EvaluatePositionRequest
-	(*EvaluatePositionResponse)(nil), // 1: remote_trainer.EvaluatePositionResponse
+	(*EvaluationRequest)(nil),      // 0: remote_trainer.EvaluationRequest
+	(*EvaluationResponseData)(nil), // 1: remote_trainer.EvaluationResponseData
+	(*EvaluationResponse)(nil),     // 2: remote_trainer.EvaluationResponse
+	(*emptypb.Empty)(nil),          // 3: google.protobuf.Empty
 }
 var file_proto_remote_trainer_proto_depIdxs = []int32{
-	0, // 0: remote_trainer.PositionEvaluator.EvaluatePosition:input_type -> remote_trainer.EvaluatePositionRequest
-	1, // 1: remote_trainer.PositionEvaluator.EvaluatePosition:output_type -> remote_trainer.EvaluatePositionResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: remote_trainer.EvaluationResponse.data:type_name -> remote_trainer.EvaluationResponseData
+	0, // 1: remote_trainer.PositionEvaluator.EvaluatePosition:input_type -> remote_trainer.EvaluationRequest
+	3, // 2: remote_trainer.PositionEvaluator.RetrieveEvaluation:input_type -> google.protobuf.Empty
+	3, // 3: remote_trainer.PositionEvaluator.ResetServer:input_type -> google.protobuf.Empty
+	3, // 4: remote_trainer.PositionEvaluator.EvaluatePosition:output_type -> google.protobuf.Empty
+	2, // 5: remote_trainer.PositionEvaluator.RetrieveEvaluation:output_type -> remote_trainer.EvaluationResponse
+	3, // 6: remote_trainer.PositionEvaluator.ResetServer:output_type -> google.protobuf.Empty
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_remote_trainer_proto_init() }
@@ -162,13 +293,14 @@ func file_proto_remote_trainer_proto_init() {
 	if File_proto_remote_trainer_proto != nil {
 		return
 	}
+	file_proto_remote_trainer_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_remote_trainer_proto_rawDesc), len(file_proto_remote_trainer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

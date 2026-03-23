@@ -3,7 +3,7 @@ package ui
 import (
 	"image/color"
 
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -72,7 +72,7 @@ func (app *App) DrawStones(ebiten_image *ebiten.Image) {
 	const antialias bool = true
 	for i := 0; i < app.Game.Get().Board.Height; i++ {
 		for j := 0; j < app.Game.Get().Board.Width; j++ {
-			var stone environment.Stone = app.Game.Get().Board.Matrix[i][j]
+			var stone environment.Stone = app.Game.Get().Board.Matrix.Front()[i][j]
 			if stone == environment.Empty {
 				continue
 			}

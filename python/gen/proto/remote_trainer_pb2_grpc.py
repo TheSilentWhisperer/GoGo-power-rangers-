@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 import gen.proto.remote_trainer_pb2 as remote__trainer__pb2
 
 GRPC_GENERATED_VERSION = '1.78.0'
@@ -36,8 +37,18 @@ class PositionEvaluatorStub(object):
         """
         self.EvaluatePosition = channel.unary_unary(
                 '/remote_trainer.PositionEvaluator/EvaluatePosition',
-                request_serializer=remote__trainer__pb2.EvaluatePositionRequest.SerializeToString,
-                response_deserializer=remote__trainer__pb2.EvaluatePositionResponse.FromString,
+                request_serializer=remote__trainer__pb2.EvaluationRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.RetrieveEvaluation = channel.unary_unary(
+                '/remote_trainer.PositionEvaluator/RetrieveEvaluation',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=remote__trainer__pb2.EvaluationResponse.FromString,
+                _registered_method=True)
+        self.ResetServer = channel.unary_unary(
+                '/remote_trainer.PositionEvaluator/ResetServer',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
 
 
@@ -50,13 +61,35 @@ class PositionEvaluatorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def RetrieveEvaluation(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ResetServer(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PositionEvaluatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'EvaluatePosition': grpc.unary_unary_rpc_method_handler(
                     servicer.EvaluatePosition,
-                    request_deserializer=remote__trainer__pb2.EvaluatePositionRequest.FromString,
-                    response_serializer=remote__trainer__pb2.EvaluatePositionResponse.SerializeToString,
+                    request_deserializer=remote__trainer__pb2.EvaluationRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'RetrieveEvaluation': grpc.unary_unary_rpc_method_handler(
+                    servicer.RetrieveEvaluation,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=remote__trainer__pb2.EvaluationResponse.SerializeToString,
+            ),
+            'ResetServer': grpc.unary_unary_rpc_method_handler(
+                    servicer.ResetServer,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -84,8 +117,62 @@ class PositionEvaluator(object):
             request,
             target,
             '/remote_trainer.PositionEvaluator/EvaluatePosition',
-            remote__trainer__pb2.EvaluatePositionRequest.SerializeToString,
-            remote__trainer__pb2.EvaluatePositionResponse.FromString,
+            remote__trainer__pb2.EvaluationRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RetrieveEvaluation(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/remote_trainer.PositionEvaluator/RetrieveEvaluation',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            remote__trainer__pb2.EvaluationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ResetServer(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/remote_trainer.PositionEvaluator/ResetServer',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,8 +1,9 @@
-module github.com/TheSilentWhisperer/GoGo-power-rangers-
+module github.com/TheSilentWhisperer/GoGo-power-rangers-/go
 
 go 1.24.0
 
 require (
+	github.com/gammazero/deque v1.2.1
 	github.com/hajimehoshi/ebiten/v2 v2.9.8
 	golang.org/x/image v0.31.0
 	google.golang.org/grpc v1.79.1

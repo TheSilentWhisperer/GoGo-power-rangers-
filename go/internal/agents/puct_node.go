@@ -15,14 +15,15 @@ type PuctNode struct {
 func NewPuctNode(game *environment.Game, parent MctsNode, idx int) *PuctNode {
 	return &PuctNode{
 		UctNode: &UctNode{
-			Parent:     parent,
-			Idx:        idx,
-			K:          len(game.LegalActions),
-			TotalN:     0,
-			N:          make([]int, len(game.LegalActions)),
-			Q:          make([]float64, len(game.LegalActions)),
-			Children:   make([]MctsNode, len(game.LegalActions)),
-			IsExpanded: make([]int32, len(game.LegalActions)),
+			Parent:       parent,
+			Idx:          idx,
+			K:            len(game.LegalActions),
+			TotalN:       0,
+			N:            make([]int, len(game.LegalActions)),
+			Q:            make([]float64, len(game.LegalActions)),
+			Children:     make([]MctsNode, len(game.LegalActions)),
+			IsEvaluating: make([]bool, len(game.LegalActions)),
+			IsTerminal:   make([]bool, len(game.LegalActions)),
 		},
 		P: make([]float64, len(game.LegalActions)),
 	}
@@ -49,12 +50,48 @@ func (node *PuctNode) GetChildren() []MctsNode {
 	return node.Children
 }
 
-func (node *PuctNode) GetIsExpanded() []int32 {
-	return node.IsExpanded
+func (node *PuctNode) GetIsEvaluating(action_idx int) bool {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	return node.IsEvaluating[action_idx]
+}
+
+func (node *PuctNode) SetIsEvaluating(action_idx int, value bool) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	node.IsEvaluating[action_idx] = value
+}
+
+func (node *PuctNode) GetIsTerminal(action_idx int) bool {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	return node.IsTerminal[action_idx]
+}
+
+func (node *PuctNode) SetIsTerminal(action_idx int, value bool) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	node.IsTerminal[action_idx] = value
 }
 
 func (node *PuctNode) SetPriors(priors []float64) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
 	copy(node.P, priors)
+}
+
+func (node *PuctNode) ExpandChild(child_idx int, game *environment.Game) {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+
+	if game.IsTerminal() {
+		node.IsTerminal[child_idx] = true
+	}
+
+	if node.Children[child_idx] == nil {
+		node.Children[child_idx] = NewPuctNode(game, node, child_idx)
+		node.IsEvaluating[child_idx] = true
+	}
 }
 
 func (node *PuctNode) SelectBestChildIndex() int {
@@ -79,11 +116,10 @@ func (node *PuctNode) SelectBestChildIndex() int {
 	node.TotalN += 1
 	node.N[best_action_idx] += 1
 	node.Q[best_action_idx] += (-1 - node.Q[best_action_idx]) / float64(node.N[best_action_idx]) // Pessimisticly suppose the value is -1
-
 	return best_action_idx
 }
 
-func (node *PuctNode) UpdateStats(value int, action_idx int) {
+func (node *PuctNode) UpdateStats(value float64, action_idx int) {
 	node.Mutex.Lock()
 	defer node.Mutex.Unlock()
 

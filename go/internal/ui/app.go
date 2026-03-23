@@ -1,10 +1,10 @@
 package ui
 
 import (
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/gen/proto/remote_trainer"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/agents"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/environment"
-	"github.com/TheSilentWhisperer/GoGo-power-rangers-/internal/utils"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/agents"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/environment"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
 	"github.com/hajimehoshi/ebiten/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -87,13 +87,17 @@ func InitializeApp() *App {
 		return nil
 	}
 
-	var expander remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
+	var client remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
 
-	var black_agent agents.Agent = agents.NewPuctAgent(5000, 8, -0.7, expander)
-	var white_agent agents.Agent = agents.NewPuctAgent(5000, 8, -0.7, expander)
+	var black_agent agents.Agent = agents.NewPuctAgent(5000, 32, 32, -2, client)
+	var white_agent agents.Agent = agents.NewPuctAgent(5000, 32, 32, -2, client)
+
+	// var black_agent agents.Agent = agents.NewUctAgent(5000, 1, 1, -2)
+	// var white_agent agents.Agent = agents.NewUctAgent(5000, 1, 1, -2)
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width
+		4,   // history length
 		6.5, // komi
 	)
 

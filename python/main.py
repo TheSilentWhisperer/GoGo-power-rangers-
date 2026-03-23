@@ -2,6 +2,8 @@ import grpc
 from concurrent import futures
 import os
 from services.inference import InferenceClient
+from models.gogo81 import Gogo81
+import torch
 
 import gen.proto.remote_trainer_pb2_grpc as remote_trainer_pb2_grpc
 
@@ -13,7 +15,12 @@ if os.path.exists(UDS_PATH):
 
 # Create server
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-remote_trainer_pb2_grpc.add_PositionEvaluatorServicer_to_server(InferenceClient(), server)
+
+model = Gogo81()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+batch_size = 32  # Adjust based on your needs and hardware capabilities
+
+remote_trainer_pb2_grpc.add_PositionEvaluatorServicer_to_server(InferenceClient(model, device, batch_size), server)
 
 server.add_insecure_port(f'unix://{UDS_PATH}')
 

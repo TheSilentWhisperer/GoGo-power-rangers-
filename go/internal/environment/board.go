@@ -1,5 +1,9 @@
 package environment
 
+import (
+	"github.com/gammazero/deque"
+)
+
 type Passes struct {
 	Black bool
 	White bool
@@ -15,27 +19,37 @@ func NewPasses(black, white bool) Passes {
 type Board struct {
 	Height        int
 	Width         int
-	Matrix        [][]Stone
+	HistoryLength int
+	//Queue of board states, where the first element is the current board state and the last element is the oldest board state
+	Matrix        *deque.Deque[[][]Stone]
 	CurrentPlayer Stone
 	Passes        Passes
+	Winner        Stone
 	Resigned      Stone
 	UnionFind     *UnionFind
 }
 
 // Constructor
-func NewBoard(height, width int) *Board {
+func NewBoard(height, width, history_length int) *Board {
 	var b *Board = &Board{
 		Height:        height,
 		Width:         width,
-		Matrix:        make([][]Stone, height),
+		HistoryLength: history_length,
+		Matrix:        new(deque.Deque[[][]Stone]),
 		CurrentPlayer: Black,
 		Passes:        NewPasses(false, false),
+		Winner:        Empty,
 		Resigned:      Empty,
 		UnionFind:     NewUnionFind(height, width),
 	}
-	for i := range b.Matrix {
-		b.Matrix[i] = make([]Stone, width)
+	var empty_board [][]Stone = make([][]Stone, height)
+	for i := range empty_board {
+		empty_board[i] = make([]Stone, width)
 	}
+	b.Matrix.PushFront(empty_board)
+
+	b.Matrix.SetBaseCap(history_length)
+	b.Matrix.Grow(history_length)
 	return b
 }
 
@@ -43,16 +57,24 @@ func (b *Board) DeepCopy() *Board {
 	var board_copy *Board = &Board{
 		Height:        b.Height,
 		Width:         b.Width,
-		Matrix:        make([][]Stone, b.Height),
+		HistoryLength: b.HistoryLength,
+		Matrix:        new(deque.Deque[[][]Stone]),
 		CurrentPlayer: b.CurrentPlayer,
 		Passes:        b.Passes,
+		Winner:        b.Winner,
 		Resigned:      b.Resigned,
 		UnionFind:     b.UnionFind.DeepCopy(),
 	}
-	for i := range b.Matrix {
-		board_copy.Matrix[i] = make([]Stone, b.Width)
-		copy(board_copy.Matrix[i], b.Matrix[i])
+	for m := range b.Matrix.Iter() {
+		var m_copy [][]Stone = make([][]Stone, len(m))
+		for i := range m {
+			m_copy[i] = make([]Stone, len(m[i]))
+			copy(m_copy[i], m[i])
+		}
+		board_copy.Matrix.PushBack(m_copy)
 	}
+	board_copy.Matrix.SetBaseCap(b.HistoryLength)
+	board_copy.Matrix.Grow(b.HistoryLength)
 	return board_copy
 }
 
@@ -70,7 +92,7 @@ func (board *Board) GetNeighbors(i, j int) map[Position]Stone {
 		if ni < 0 || ni >= board.Height || nj < 0 || nj >= board.Width {
 			continue
 		}
-		neighbors[NewPosition(ni, nj)] = board.Matrix[ni][nj]
+		neighbors[NewPosition(ni, nj)] = board.Matrix.Front()[ni][nj]
 	}
 	return neighbors
 }
@@ -85,11 +107,11 @@ func (board *Board) GetCapturedStones(captured_group *Group) map[Position]Stone 
 	//define dfs function
 	dfs = func(pos Position) {
 		visited[pos] = true
-		captured_stones[pos] = board.Matrix[pos.First][pos.Second]
+		captured_stones[pos] = board.Matrix.Front()[pos.First][pos.Second]
 		// Explore neighbors
 		var neighbors map[Position]Stone = board.GetNeighbors(pos.First, pos.Second)
 		for neighbor, neighbor_stone := range neighbors {
-			if neighbor_stone == board.Matrix[pos.First][pos.Second] {
+			if neighbor_stone == board.Matrix.Front()[pos.First][pos.Second] {
 				if !visited[neighbor] {
 					dfs(neighbor)
 				}

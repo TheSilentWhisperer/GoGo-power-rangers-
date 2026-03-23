@@ -4,16 +4,31 @@ package remote_trainer;
 
 option go_package = "/remote_trainer";
 
+import "google/protobuf/empty.proto";
+
 service PositionEvaluator {
-    rpc EvaluatePosition (EvaluatePositionRequest) returns (EvaluatePositionResponse);
+    rpc EvaluatePosition (EvaluationRequest) returns (google.protobuf.Empty);
+    rpc RetrieveEvaluation (google.protobuf.Empty) returns (EvaluationResponse);
+    rpc ResetServer (google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
-message EvaluatePositionRequest {
-    int64 x = 1;
-    int64 y = 2;
+message EvaluationRequest {
+    int64 request_id = 1;
+    int64 history_length = 2;
+    int64 height = 3;
+    int64 width = 4;
+    repeated int64 flattened_board_history = 5;
+    int64 black_to_play = 6;
+    int64 enemy_passed = 7;
+    repeated bool legal_actions_mask = 8;
 }
 
-message EvaluatePositionResponse {
-    int64 z = 1;
+message EvaluationResponseData {
+    int64 request_id = 1;
+    double value = 2;
+    repeated double priors = 3;
 }
 
+message EvaluationResponse {
+    optional EvaluationResponseData data = 2;
+}

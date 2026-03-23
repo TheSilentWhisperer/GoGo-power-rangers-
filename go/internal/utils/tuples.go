@@ -1,6 +1,10 @@
 package utils
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/gammazero/deque"
+)
 
 // Generic Pair and Triple helpers for small tuple-like structs.
 // Pair uses fields I and J to be compatible with existing Position usages.
@@ -46,4 +50,47 @@ func NewLockedTriple[A any, B any, C any](a A, b B, c C) *LockedTriple[A, B, C] 
 		Triple: NewTriple(a, b, c),
 		Mutex:  sync.Mutex{},
 	}
+}
+
+type LockedQueue[T any] struct {
+	Mutex  sync.Mutex
+	MaxCap int
+	Queue  *deque.Deque[T]
+}
+
+func NewLockedQueue[T any](max_cap int) *LockedQueue[T] {
+	var lq *LockedQueue[T] = &LockedQueue[T]{
+		MaxCap: max_cap,
+		Queue:  new(deque.Deque[T]),
+		Mutex:  sync.Mutex{},
+	}
+	lq.Queue.SetBaseCap(max_cap)
+	lq.Queue.Grow(max_cap)
+	return lq
+}
+
+func (lq *LockedQueue[T]) Enqueue(item T) {
+	lq.Mutex.Lock()
+	defer lq.Mutex.Unlock()
+	if lq.Queue.Len() == lq.MaxCap {
+		println("Warning: LockedQueue is full, overwriting oldest item")
+		lq.Queue.PopFront()
+	}
+	lq.Queue.PushBack(item)
+}
+
+func (lq *LockedQueue[T]) Dequeue() (T, bool) {
+	lq.Mutex.Lock()
+	defer lq.Mutex.Unlock()
+	if lq.Queue.Len() == 0 {
+		var zero T
+		return zero, false
+	}
+	return lq.Queue.PopFront(), true
+}
+
+func (lq *LockedQueue[T]) Len() int {
+	lq.Mutex.Lock()
+	defer lq.Mutex.Unlock()
+	return lq.Queue.Len()
 }

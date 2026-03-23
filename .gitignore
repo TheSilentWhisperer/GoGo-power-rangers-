@@ -30,3 +30,9 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Remove PyCache and other Python artifacts if you have Python code in the same repository
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

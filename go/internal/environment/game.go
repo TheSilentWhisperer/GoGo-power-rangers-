@@ -1,5 +1,7 @@
 package environment
 
+import "github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+
 type Score struct {
 	Black float64
 	White float64
@@ -21,10 +23,10 @@ type Game struct {
 }
 
 // Constructor
-func NewGame(height, width int, komi float64) *Game {
+func NewGame(height, width, history_length int, komi float64) *Game {
 	var game *Game = &Game{
 		Komi:         komi,
-		Board:        NewBoard(height, width),
+		Board:        NewBoard(height, width, history_length),
 		LegalActions: make([]Action, 0),
 		BoardHasher:  NewBoardHasher(height, width),
 	}
@@ -42,6 +44,80 @@ func (game *Game) DeepCopy() *Game {
 	}
 	copy(game_copy.LegalActions, game.LegalActions)
 	return game_copy
+}
+
+func (game *Game) GetLegalMask() []bool {
+	var board *Board = game.Board
+	var legal_mask []bool = make([]bool, 2+board.Height*board.Width)
+	legal_mask[0] = true // Resign action is always legal
+	legal_mask[1] = true // Pass action is always legal
+	for _, action := range game.LegalActions {
+		switch action := action.(type) {
+		case PutStone:
+			var put_stone PutStone = action
+			legal_mask[2+put_stone.I*board.Width+put_stone.J] = true
+		}
+	}
+	return legal_mask
+}
+
+func (game *Game) Message(request_id int) *remote_trainer.EvaluationRequest {
+	var board *Board = game.Board
+	var history_length int = game.Board.HistoryLength
+
+	var flattened_board_history []int64 = make([]int64, history_length*board.Height*board.Width)
+
+	for h := 0; h < history_length; h++ {
+		for i := 0; i < board.Height; i++ {
+			for j := 0; j < board.Width; j++ {
+				if h >= board.Matrix.Len() {
+					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = 0
+					continue
+				}
+				switch board.Matrix.At(h)[i][j] {
+				case Empty:
+					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = 0
+				case Black:
+					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = 1
+				case White:
+					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = -1
+				}
+			}
+		}
+	}
+
+	var player_color, pass_count int64
+	switch board.CurrentPlayer {
+	case Black:
+		player_color = 1
+	case White:
+		player_color = -1
+	default:
+		panic("Invalid current player color")
+	}
+
+	switch board.Passes {
+	case NewPasses(true, false):
+		pass_count = 1
+	case NewPasses(false, true):
+		pass_count = 1
+	case NewPasses(true, true):
+		panic("We should not ask for a position evaluation of a terminal position")
+	default:
+		pass_count = 0
+	}
+
+	var message *remote_trainer.EvaluationRequest = &remote_trainer.EvaluationRequest{
+		RequestId:             int64(request_id),
+		HistoryLength:         int64(history_length),
+		Height:                int64(board.Height),
+		Width:                 int64(board.Width),
+		FlattenedBoardHistory: flattened_board_history,
+		BlackToPlay:           player_color,
+		EnemyPassed:           pass_count,
+		LegalActionsMask:      game.GetLegalMask(),
+	}
+	return message
 }
 
 // Methods
@@ -85,7 +161,7 @@ func (game *Game) ComputeScore() Score {
 
 	for i := 0; i < game.Board.Height; i++ {
 		for j := 0; j < game.Board.Width; j++ {
-			if !visited[i][j] && game.Board.Matrix[i][j] == Empty {
+			if !visited[i][j] && game.Board.Matrix.Front()[i][j] == Empty {
 				dfs(i, j)
 			}
 		}
@@ -93,7 +169,7 @@ func (game *Game) ComputeScore() Score {
 
 	for i := 0; i < game.Board.Height; i++ {
 		for j := 0; j < game.Board.Width; j++ {
-			switch game.Board.Matrix[i][j] {
+			switch game.Board.Matrix.Front()[i][j] {
 			case Black:
 				black_score += 1.0
 			case White:
@@ -115,13 +191,18 @@ func (game *Game) ComputeScore() Score {
 }
 
 func (game *Game) GetWinner() Stone {
+	if game.Board.Winner != Empty {
+		return game.Board.Winner
+	}
 	if game.Board.Resigned != Empty {
 		return game.Board.Resigned.Opponent()
 	}
 	var score Score = game.ComputeScore()
 	if score.Black > score.White {
+		game.Board.Winner = Black
 		return Black
 	} else {
+		game.Board.Winner = White
 		return White
 	}
 }
@@ -156,7 +237,7 @@ func (game *Game) GetNeighboringLiberties(i, j int) (int, map[Position]int, map[
 
 func (game *Game) IsLegalAction(i, j int) bool {
 
-	if game.Board.Matrix[i][j] != Empty {
+	if game.Board.Matrix.Front()[i][j] != Empty {
 		return false
 	}
 
@@ -228,7 +309,7 @@ func (game *Game) CaptureGroup(captured_group *Group) {
 	for pos, stone := range captured_stones {
 		var i, j int = pos.First, pos.Second
 		// Remove stone from board and update board hash
-		game.Board.Matrix[i][j] = Empty
+		game.Board.Matrix.Front()[i][j] = Empty
 		game.BoardHasher.UpdateHash(i, j, stone, Empty, false)
 		// Remove stone from union-find
 		game.Board.UnionFind.RemoveStone(pos)
@@ -252,7 +333,7 @@ func (game *Game) PutStone(i, j int) {
 	liberties, friendly_shared_liberties, enemy_shared_liberties := game.GetNeighboringLiberties(i, j)
 
 	// Place the Stone and update board hash
-	game.Board.Matrix[i][j] = game.Board.CurrentPlayer
+	game.Board.Matrix.Front()[i][j] = game.Board.CurrentPlayer
 	game.BoardHasher.UpdateHash(i, j, Empty, game.Board.CurrentPlayer, false)
 
 	// Add new stone to union-find
@@ -279,10 +360,22 @@ func (game *Game) PutStone(i, j int) {
 			enemy_group.Liberties -= shared_liberties
 		}
 	}
-
 }
 
 func (game *Game) PlayAction(action Action) {
+
+	//push a copy of the front of the queue to the front of the history to be modified by the action
+	var board_copy [][]Stone = make([][]Stone, game.Board.Height)
+	for i := range board_copy {
+		board_copy[i] = make([]Stone, game.Board.Width)
+		copy(board_copy[i], game.Board.Matrix.Front()[i])
+	}
+	// Remove the oldest board state from the back if we exceed the history length (this will happen when we have a full history and push a new board state to the front)
+	if game.Board.Matrix.Len() == game.Board.HistoryLength {
+		game.Board.Matrix.PopBack()
+	}
+	game.Board.Matrix.PushFront(board_copy)
+
 	switch a := action.(type) {
 	case PutStone:
 		game.PutStone(a.I, a.J)
@@ -342,7 +435,7 @@ func (game *Game) DisplayBoard() {
 	// Print board
 	for i := 0; i < game.Board.Height; i++ {
 		for j := 0; j < game.Board.Width; j++ {
-			print(stone_to_char[game.Board.Matrix[i][j]], " ")
+			print(stone_to_char[game.Board.Matrix.Front()[i][j]], " ")
 		}
 		println()
 	}

@@ -22,9 +22,10 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14remote_trainer.proto\x12\x0eremote_trainer\"/\n\x17\x45valuatePositionRequest\x12\t\n\x01x\x18\x01 \x01(\x03\x12\t\n\x01y\x18\x02 \x01(\x03\"%\n\x18\x45valuatePositionResponse\x12\t\n\x01z\x18\x01 \x01(\x03\x32z\n\x11PositionEvaluator\x12\x65\n\x10\x45valuatePosition\x12\'.remote_trainer.EvaluatePositionRequest\x1a(.remote_trainer.EvaluatePositionResponseB\x11Z\x0f/remote_trainerb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xc8\x01\n\x11\x45valuationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\x16\n\x0ehistory_length\x18\x02 \x01(\x03\x12\x0e\n\x06height\x18\x03 \x01(\x03\x12\r\n\x05width\x18\x04 \x01(\x03\x12\x1f\n\x17\x66lattened_board_history\x18\x05 \x03(\x03\x12\x15\n\rblack_to_play\x18\x06 \x01(\x03\x12\x14\n\x0c\x65nemy_passed\x18\x07 \x01(\x03\x12\x1a\n\x12legal_actions_mask\x18\x08 \x03(\x08\"K\n\x16\x45valuationResponseData\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\x12\x0e\n\x06priors\x18\x03 \x03(\x01\"X\n\x12\x45valuationResponse\x12\x39\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32&.remote_trainer.EvaluationResponseDataH\x00\x88\x01\x01\x42\x07\n\x05_data2\xf3\x01\n\x11PositionEvaluator\x12M\n\x10\x45valuatePosition\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12P\n\x12RetrieveEvaluation\x12\x16.google.protobuf.Empty\x1a\".remote_trainer.EvaluationResponse\x12=\n\x0bResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,10 +33,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'remote_trainer_pb2', _globa
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z\017/remote_trainer'
-  _globals['_EVALUATEPOSITIONREQUEST']._serialized_start=40
-  _globals['_EVALUATEPOSITIONREQUEST']._serialized_end=87
-  _globals['_EVALUATEPOSITIONRESPONSE']._serialized_start=89
-  _globals['_EVALUATEPOSITIONRESPONSE']._serialized_end=126
-  _globals['_POSITIONEVALUATOR']._serialized_start=128
-  _globals['_POSITIONEVALUATOR']._serialized_end=250
+  _globals['_EVALUATIONREQUEST']._serialized_start=70
+  _globals['_EVALUATIONREQUEST']._serialized_end=270
+  _globals['_EVALUATIONRESPONSEDATA']._serialized_start=272
+  _globals['_EVALUATIONRESPONSEDATA']._serialized_end=347
+  _globals['_EVALUATIONRESPONSE']._serialized_start=349
+  _globals['_EVALUATIONRESPONSE']._serialized_end=437
+  _globals['_POSITIONEVALUATOR']._serialized_start=440
+  _globals['_POSITIONEVALUATOR']._serialized_end=683
 # @@protoc_insertion_point(module_scope)
