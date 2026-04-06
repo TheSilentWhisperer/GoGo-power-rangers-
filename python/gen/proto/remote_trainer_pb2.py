@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xc8\x01\n\x11\x45valuationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\x16\n\x0ehistory_length\x18\x02 \x01(\x03\x12\x0e\n\x06height\x18\x03 \x01(\x03\x12\r\n\x05width\x18\x04 \x01(\x03\x12\x1f\n\x17\x66lattened_board_history\x18\x05 \x03(\x03\x12\x15\n\rblack_to_play\x18\x06 \x01(\x03\x12\x14\n\x0c\x65nemy_passed\x18\x07 \x01(\x03\x12\x1a\n\x12legal_actions_mask\x18\x08 \x03(\x08\"K\n\x16\x45valuationResponseData\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\x12\x0e\n\x06priors\x18\x03 \x03(\x01\"X\n\x12\x45valuationResponse\x12\x39\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32&.remote_trainer.EvaluationResponseDataH\x00\x88\x01\x01\x42\x07\n\x05_data2\xf3\x01\n\x11PositionEvaluator\x12M\n\x10\x45valuatePosition\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12P\n\x12RetrieveEvaluation\x12\x16.google.protobuf.Empty\x1a\".remote_trainer.EvaluationResponse\x12=\n\x0bResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xd7\x01\n\x11\x45valuationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\x16\n\x0ehistory_length\x18\x02 \x01(\x03\x12\x0e\n\x06height\x18\x03 \x01(\x03\x12\r\n\x05width\x18\x04 \x01(\x03\x12\x1f\n\x17\x66lattened_board_history\x18\x05 \x03(\x03\x12\x15\n\rblack_to_play\x18\x06 \x01(\x03\x12\x14\n\x0c\x65nemy_passed\x18\x07 \x01(\x03\x12\x1a\n\x12legal_actions_mask\x18\x08 \x03(\x08\x12\r\n\x05\x66lush\x18\t \x01(\x08\"%\n\x0fRetrieveRequest\x12\x12\n\nprocess_id\x18\x01 \x01(\x03\"K\n\x16\x45valuationResponseData\x12\x12\n\nrequest_id\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\x12\x0e\n\x06priors\x18\x03 \x03(\x01\"X\n\x12\x45valuationResponse\x12\x39\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32&.remote_trainer.EvaluationResponseDataH\x00\x88\x01\x01\x42\x07\n\x05_data\"Z\n\x0eTrainingSample\x12\x31\n\x06inputs\x18\x01 \x01(\x0b\x32!.remote_trainer.EvaluationRequest\x12\x15\n\rpolicy_target\x18\x02 \x03(\x03\"K\n\x0cTrainingData\x12,\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x1e.remote_trainer.TrainingSample\x12\r\n\x05value\x18\x02 \x01(\x01\x32\xdb\x02\n\x11PositionEvaluator\x12M\n\x10SubmitEvaluation\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12Y\n\x12RetrieveEvaluation\x12\x1f.remote_trainer.RetrieveRequest\x1a\".remote_trainer.EvaluationResponse\x12]\n\x10\x45valuatePosition\x12!.remote_trainer.EvaluationRequest\x1a&.remote_trainer.EvaluationResponseData\x12=\n\x0bResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty2S\n\nNetTrainer\x12\x45\n\rAppendDataset\x12\x1c.remote_trainer.TrainingData\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,11 +34,19 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z\017/remote_trainer'
   _globals['_EVALUATIONREQUEST']._serialized_start=70
-  _globals['_EVALUATIONREQUEST']._serialized_end=270
-  _globals['_EVALUATIONRESPONSEDATA']._serialized_start=272
-  _globals['_EVALUATIONRESPONSEDATA']._serialized_end=347
-  _globals['_EVALUATIONRESPONSE']._serialized_start=349
-  _globals['_EVALUATIONRESPONSE']._serialized_end=437
-  _globals['_POSITIONEVALUATOR']._serialized_start=440
-  _globals['_POSITIONEVALUATOR']._serialized_end=683
+  _globals['_EVALUATIONREQUEST']._serialized_end=285
+  _globals['_RETRIEVEREQUEST']._serialized_start=287
+  _globals['_RETRIEVEREQUEST']._serialized_end=324
+  _globals['_EVALUATIONRESPONSEDATA']._serialized_start=326
+  _globals['_EVALUATIONRESPONSEDATA']._serialized_end=401
+  _globals['_EVALUATIONRESPONSE']._serialized_start=403
+  _globals['_EVALUATIONRESPONSE']._serialized_end=491
+  _globals['_TRAININGSAMPLE']._serialized_start=493
+  _globals['_TRAININGSAMPLE']._serialized_end=583
+  _globals['_TRAININGDATA']._serialized_start=585
+  _globals['_TRAININGDATA']._serialized_end=660
+  _globals['_POSITIONEVALUATOR']._serialized_start=663
+  _globals['_POSITIONEVALUATOR']._serialized_end=1010
+  _globals['_NETTRAINER']._serialized_start=1012
+  _globals['_NETTRAINER']._serialized_end=1095
 # @@protoc_insertion_point(module_scope)

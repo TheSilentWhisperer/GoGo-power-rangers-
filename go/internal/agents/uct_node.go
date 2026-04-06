@@ -14,6 +14,7 @@ type UctNode struct {
 	K            int       // Number of legal actions
 	TotalN       int       // Total visit count
 	N            []int     // Visit counts for each action
+	W            []float64 // Total reward for each action
 	Q            []float64 // Total reward for each action
 	Children     []MctsNode
 	IsEvaluating []bool
@@ -28,6 +29,7 @@ func NewUctNode(game *environment.Game, parent MctsNode, idx int) *UctNode {
 		K:            len(game.LegalActions),
 		TotalN:       0,
 		N:            make([]int, len(game.LegalActions)),
+		W:            make([]float64, len(game.LegalActions)),
 		Q:            make([]float64, len(game.LegalActions)),
 		Children:     make([]MctsNode, len(game.LegalActions)),
 		IsEvaluating: make([]bool, len(game.LegalActions)),
@@ -46,6 +48,12 @@ func (node *UctNode) GetIdx() int {
 
 func (node *UctNode) GetN() []int {
 	return node.N
+}
+
+func (node *UctNode) GetTotalN() int {
+	node.Mutex.Lock()
+	defer node.Mutex.Unlock()
+	return node.TotalN
 }
 
 func (node *UctNode) GetQ() []float64 {
@@ -78,6 +86,11 @@ func (node *UctNode) SetIsTerminal(action_idx int, value bool) {
 	node.Mutex.Lock()
 	defer node.Mutex.Unlock()
 	node.IsTerminal[action_idx] = value
+}
+
+func (node *UctNode) GetHasPriors() bool {
+	// UCT nodes don't use priors, so always return true
+	return true
 }
 
 // Methods
@@ -118,10 +131,10 @@ func (node *UctNode) SelectBestChildIndex() int {
 		}
 	}
 
-	// Add virtual loss
+	// Add virtual loss: increment visit counts so other selectors prefer other actions.
+	// Do NOT overwrite the stored Q average here — use counts to reduce selection probability.
 	node.TotalN += 1
 	node.N[best_action_idx] += 1
-	node.Q[best_action_idx] += (-1 - node.Q[best_action_idx]) / float64(node.N[best_action_idx]) // Pessimisticly suppose the value is -1
 
 	return best_action_idx
 }
@@ -130,6 +143,10 @@ func (node *UctNode) UpdateStats(value float64, action_idx int) {
 	node.Mutex.Lock()
 	defer node.Mutex.Unlock()
 
-	// We artificially added a visit which resulted in a value of -1, replace it with the actual value
-	node.Q[action_idx] += float64(value+1) / float64(node.N[action_idx])
+	// Update running average Q for the action using online update formula
+	if node.N[action_idx] <= 0 {
+		node.Q[action_idx] = value
+	} else {
+		node.Q[action_idx] += (value - node.Q[action_idx]) / float64(node.N[action_idx])
+	}
 }

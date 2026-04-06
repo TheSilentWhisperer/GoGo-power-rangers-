@@ -22,9 +22,12 @@ func (evaluator *UctEvaluator) GetEvaluationQueue() *utils.LockedQueue[utils.Tri
 }
 
 func (evaluator *UctEvaluator) Evaluate(to_evaluate utils.Triple[MctsNode, int, *environment.Game]) utils.Triple[MctsNode, float64, *environment.Game] {
+
 	var node MctsNode = to_evaluate.First
 	var action_idx int = to_evaluate.Second
 	var game *environment.Game = to_evaluate.Third
+
+	defer node.SetIsEvaluating(action_idx, false)
 
 	var evaluated_node MctsNode = node.GetChildren()[action_idx]
 
@@ -34,14 +37,16 @@ func (evaluator *UctEvaluator) Evaluate(to_evaluate utils.Triple[MctsNode, int, 
 	for !game.IsTerminal() {
 		game.PlayAction(both_players.SelectAction(game))
 	}
-	var value float64 = 0
-	if game.GetWinner() == environment.Empty {
-		value = 0
-	} else if game.GetWinner() == current_player {
-		value = 1
-	} else {
-		value = -1
+	// Use winner only (±1) — do not care about score difference
+	var winner environment.Stone = game.GetWinner()
+	var value float64
+	switch winner {
+	case current_player:
+		value = 1.0
+	case current_player.Opponent():
+		value = -1.0
+	default:
+		value = 0.0
 	}
-	node.SetIsEvaluating(action_idx, false)
 	return utils.NewTriple(evaluated_node, value, game)
 }

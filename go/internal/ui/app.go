@@ -50,28 +50,44 @@ func NewUI(window_title string, margin Margin, board_size, highlighted_intersect
 	}
 }
 
-type App struct {
-	MoveSearchInitiated chan bool // Channel to signal the start of move search (used for synchronization between the main thread and the MCTS goroutine)
-	IsThinking          *utils.LockedBool
-	IsPaused            *utils.LockedBool
-	BlackAgent          agents.Agent
-	WhiteAgent          agents.Agent
-	Game                *utils.LockedPointer[environment.Game]
-	UIMetadata          *UIMetadata
-	KeyStates           map[ebiten.Key]*utils.LockedPointer[KeyState]
+type GameState struct {
+	Game            *utils.LockedPointer[environment.Game]
+	BlackAgent      agents.Agent
+	WhiteAgent      agents.Agent
+	IsThinking      *utils.LockedBool
+	PositionHistory []*utils.LockedPair[*environment.Game, []int]
 }
 
-func NewApp(black_agent, white_agent agents.Agent, game *environment.Game, ui_metadata *UIMetadata, key_list []ebiten.Key) *App {
+type App struct {
+	MoveSearchInitiated chan bool // Channel to signal the start of move search (used for synchronization between the main thread and the MCTS goroutine)
+	IsPaused            *utils.LockedBool
+	GameState           *GameState
+	UIMetadata          *UIMetadata
+	KeyStates           map[ebiten.Key]*utils.LockedPointer[KeyState]
+	Client              remote_trainer.NetTrainerClient
+}
+
+func NewApp(game *environment.Game, ui_metadata *UIMetadata, key_list []ebiten.Key, inference_client remote_trainer.PositionEvaluatorClient, training_client remote_trainer.NetTrainerClient) *App {
 	var app *App = &App{
 		MoveSearchInitiated: make(chan bool, 1),
-		IsThinking:          utils.NewLockedBool(false), // Whether the current agent is thinking
-		IsPaused:            utils.NewLockedBool(false), // Whether the game is paused
-		BlackAgent:          black_agent,
-		WhiteAgent:          white_agent,
-		Game:                utils.NewLockedPointer(game),
+		IsPaused:            utils.NewLockedBool(false),
 		UIMetadata:          ui_metadata,
 		KeyStates:           make(map[ebiten.Key]*utils.LockedPointer[KeyState]),
+		Client:              training_client,
 	}
+
+	// Create agents for single game
+	var black_agent agents.Agent = agents.NewPuctAgent(400, 8, 16, -0.90, inference_client, 0.25, 10)
+	var white_agent agents.Agent = agents.NewPuctAgent(400, 8, 16, -0.90, inference_client, 0.25, 10)
+
+	app.GameState = &GameState{
+		Game:            utils.NewLockedPointer(game),
+		BlackAgent:      black_agent,
+		WhiteAgent:      white_agent,
+		IsThinking:      utils.NewLockedBool(false),
+		PositionHistory: make([]*utils.LockedPair[*environment.Game, []int], 0),
+	}
+
 	for _, key := range key_list {
 		app.KeyStates[key] = utils.NewLockedPointer[KeyState](NewKeyState(key))
 	}
@@ -79,7 +95,6 @@ func NewApp(black_agent, white_agent agents.Agent, game *environment.Game, ui_me
 }
 
 func InitializeApp() *App {
-
 	//establish UDS connection to the position evaluation server
 	conn, err := grpc.NewClient("unix:///tmp/position_evaluator.sock", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -87,13 +102,10 @@ func InitializeApp() *App {
 		return nil
 	}
 
-	var client remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
+	var inference_client remote_trainer.PositionEvaluatorClient = remote_trainer.NewPositionEvaluatorClient(conn)
+	var training_client remote_trainer.NetTrainerClient = remote_trainer.NewNetTrainerClient(conn)
 
-	var black_agent agents.Agent = agents.NewPuctAgent(5000, 32, 32, -2, client)
-	var white_agent agents.Agent = agents.NewPuctAgent(5000, 32, 32, -2, client)
-
-	// var black_agent agents.Agent = agents.NewUctAgent(5000, 1, 1, -2)
-	// var white_agent agents.Agent = agents.NewUctAgent(5000, 1, 1, -2)
+	// Create single game
 	var game *environment.Game = environment.NewGame(
 		9,   // height
 		9,   // width
@@ -101,19 +113,29 @@ func InitializeApp() *App {
 		6.5, // komi
 	)
 
-	var margin Margin = NewMargin(30, 30, 30, 30)
-	const BoardSize float32 = 400
+	var margin Margin = NewMargin(80, 80, 80, 80)
+	const BoardSize float32 = 500
 	const WindowTitle string = "Go Game"
 	const HighlightedIntersectionsRadiusScale float32 = 0.1
 	const StoneRadiusScale float32 = 0.4
-	const DescriptionBarHeight float32 = 50
-	const PassSquareSizeScale float32 = 0.8
+	const DescriptionBarHeight float32 = 40
+	const PassSquareSizeScale float32 = 0.4
 	var KeyList []ebiten.Key = []ebiten.Key{ebiten.KeySpace}
 
 	var ui_metadata *UIMetadata = NewUI(WindowTitle, margin, BoardSize, HighlightedIntersectionsRadiusScale, StoneRadiusScale, DescriptionBarHeight, PassSquareSizeScale)
-	var app *App = NewApp(black_agent, white_agent, game, ui_metadata, KeyList)
+	var app *App = NewApp(game, ui_metadata, KeyList, inference_client, training_client)
 
 	ebiten.SetWindowSize(app.WindowWidth(), app.WindowHeight())
 	ebiten.SetWindowTitle(WindowTitle)
+
+	// Center window on primary monitor
+	monitor := ebiten.Monitor()
+	monitorW, monitorH := monitor.Size()
+	windowW := app.WindowWidth()
+	windowH := app.WindowHeight()
+	centerX := (monitorW - windowW) / 2
+	centerY := (monitorH - windowH) / 2
+	ebiten.SetWindowPosition(centerX, centerY)
+
 	return app
 }

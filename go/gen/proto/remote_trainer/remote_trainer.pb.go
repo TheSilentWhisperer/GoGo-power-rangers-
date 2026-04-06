@@ -32,6 +32,7 @@ type EvaluationRequest struct {
 	BlackToPlay           int64                  `protobuf:"varint,6,opt,name=black_to_play,json=blackToPlay,proto3" json:"black_to_play,omitempty"`
 	EnemyPassed           int64                  `protobuf:"varint,7,opt,name=enemy_passed,json=enemyPassed,proto3" json:"enemy_passed,omitempty"`
 	LegalActionsMask      []bool                 `protobuf:"varint,8,rep,packed,name=legal_actions_mask,json=legalActionsMask,proto3" json:"legal_actions_mask,omitempty"`
+	Flush                 bool                   `protobuf:"varint,9,opt,name=flush,proto3" json:"flush,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -122,6 +123,57 @@ func (x *EvaluationRequest) GetLegalActionsMask() []bool {
 	return nil
 }
 
+func (x *EvaluationRequest) GetFlush() bool {
+	if x != nil {
+		return x.Flush
+	}
+	return false
+}
+
+type RetrieveRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProcessId     int64                  `protobuf:"varint,1,opt,name=process_id,json=processId,proto3" json:"process_id,omitempty"` // PID of requesting process for response routing
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetrieveRequest) Reset() {
+	*x = RetrieveRequest{}
+	mi := &file_proto_remote_trainer_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetrieveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetrieveRequest) ProtoMessage() {}
+
+func (x *RetrieveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_remote_trainer_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetrieveRequest.ProtoReflect.Descriptor instead.
+func (*RetrieveRequest) Descriptor() ([]byte, []int) {
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *RetrieveRequest) GetProcessId() int64 {
+	if x != nil {
+		return x.ProcessId
+	}
+	return 0
+}
+
 type EvaluationResponseData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RequestId     int64                  `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
@@ -133,7 +185,7 @@ type EvaluationResponseData struct {
 
 func (x *EvaluationResponseData) Reset() {
 	*x = EvaluationResponseData{}
-	mi := &file_proto_remote_trainer_proto_msgTypes[1]
+	mi := &file_proto_remote_trainer_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -145,7 +197,7 @@ func (x *EvaluationResponseData) String() string {
 func (*EvaluationResponseData) ProtoMessage() {}
 
 func (x *EvaluationResponseData) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_remote_trainer_proto_msgTypes[1]
+	mi := &file_proto_remote_trainer_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -158,7 +210,7 @@ func (x *EvaluationResponseData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvaluationResponseData.ProtoReflect.Descriptor instead.
 func (*EvaluationResponseData) Descriptor() ([]byte, []int) {
-	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{1}
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *EvaluationResponseData) GetRequestId() int64 {
@@ -191,7 +243,7 @@ type EvaluationResponse struct {
 
 func (x *EvaluationResponse) Reset() {
 	*x = EvaluationResponse{}
-	mi := &file_proto_remote_trainer_proto_msgTypes[2]
+	mi := &file_proto_remote_trainer_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -203,7 +255,7 @@ func (x *EvaluationResponse) String() string {
 func (*EvaluationResponse) ProtoMessage() {}
 
 func (x *EvaluationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_remote_trainer_proto_msgTypes[2]
+	mi := &file_proto_remote_trainer_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -216,7 +268,7 @@ func (x *EvaluationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EvaluationResponse.ProtoReflect.Descriptor instead.
 func (*EvaluationResponse) Descriptor() ([]byte, []int) {
-	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{2}
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *EvaluationResponse) GetData() *EvaluationResponseData {
@@ -226,11 +278,115 @@ func (x *EvaluationResponse) GetData() *EvaluationResponseData {
 	return nil
 }
 
+type TrainingSample struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Inputs        *EvaluationRequest     `protobuf:"bytes,1,opt,name=inputs,proto3" json:"inputs,omitempty"`
+	PolicyTarget  []int64                `protobuf:"varint,2,rep,packed,name=policy_target,json=policyTarget,proto3" json:"policy_target,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrainingSample) Reset() {
+	*x = TrainingSample{}
+	mi := &file_proto_remote_trainer_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingSample) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingSample) ProtoMessage() {}
+
+func (x *TrainingSample) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_remote_trainer_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingSample.ProtoReflect.Descriptor instead.
+func (*TrainingSample) Descriptor() ([]byte, []int) {
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *TrainingSample) GetInputs() *EvaluationRequest {
+	if x != nil {
+		return x.Inputs
+	}
+	return nil
+}
+
+func (x *TrainingSample) GetPolicyTarget() []int64 {
+	if x != nil {
+		return x.PolicyTarget
+	}
+	return nil
+}
+
+type TrainingData struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          []*TrainingSample      `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	Value         float64                `protobuf:"fixed64,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrainingData) Reset() {
+	*x = TrainingData{}
+	mi := &file_proto_remote_trainer_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingData) ProtoMessage() {}
+
+func (x *TrainingData) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_remote_trainer_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingData.ProtoReflect.Descriptor instead.
+func (*TrainingData) Descriptor() ([]byte, []int) {
+	return file_proto_remote_trainer_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *TrainingData) GetData() []*TrainingSample {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *TrainingData) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
 var File_proto_remote_trainer_proto protoreflect.FileDescriptor
 
 const file_proto_remote_trainer_proto_rawDesc = "" +
 	"\n" +
-	"\x1aproto/remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xb4\x02\n" +
+	"\x1aproto/remote_trainer.proto\x12\x0eremote_trainer\x1a\x1bgoogle/protobuf/empty.proto\"\xca\x02\n" +
 	"\x11EvaluationRequest\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x01 \x01(\x03R\trequestId\x12%\n" +
@@ -240,7 +396,11 @@ const file_proto_remote_trainer_proto_rawDesc = "" +
 	"\x17flattened_board_history\x18\x05 \x03(\x03R\x15flattenedBoardHistory\x12\"\n" +
 	"\rblack_to_play\x18\x06 \x01(\x03R\vblackToPlay\x12!\n" +
 	"\fenemy_passed\x18\a \x01(\x03R\venemyPassed\x12,\n" +
-	"\x12legal_actions_mask\x18\b \x03(\bR\x10legalActionsMask\"e\n" +
+	"\x12legal_actions_mask\x18\b \x03(\bR\x10legalActionsMask\x12\x14\n" +
+	"\x05flush\x18\t \x01(\bR\x05flush\"0\n" +
+	"\x0fRetrieveRequest\x12\x1d\n" +
+	"\n" +
+	"process_id\x18\x01 \x01(\x03R\tprocessId\"e\n" +
 	"\x16EvaluationResponseData\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x01 \x01(\x03R\trequestId\x12\x14\n" +
@@ -248,11 +408,21 @@ const file_proto_remote_trainer_proto_rawDesc = "" +
 	"\x06priors\x18\x03 \x03(\x01R\x06priors\"^\n" +
 	"\x12EvaluationResponse\x12?\n" +
 	"\x04data\x18\x02 \x01(\v2&.remote_trainer.EvaluationResponseDataH\x00R\x04data\x88\x01\x01B\a\n" +
-	"\x05_data2\xf3\x01\n" +
+	"\x05_data\"p\n" +
+	"\x0eTrainingSample\x129\n" +
+	"\x06inputs\x18\x01 \x01(\v2!.remote_trainer.EvaluationRequestR\x06inputs\x12#\n" +
+	"\rpolicy_target\x18\x02 \x03(\x03R\fpolicyTarget\"X\n" +
+	"\fTrainingData\x122\n" +
+	"\x04data\x18\x01 \x03(\v2\x1e.remote_trainer.TrainingSampleR\x04data\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x01R\x05value2\xdb\x02\n" +
 	"\x11PositionEvaluator\x12M\n" +
-	"\x10EvaluatePosition\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
-	"\x12RetrieveEvaluation\x12\x16.google.protobuf.Empty\x1a\".remote_trainer.EvaluationResponse\x12=\n" +
-	"\vResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3"
+	"\x10SubmitEvaluation\x12!.remote_trainer.EvaluationRequest\x1a\x16.google.protobuf.Empty\x12Y\n" +
+	"\x12RetrieveEvaluation\x12\x1f.remote_trainer.RetrieveRequest\x1a\".remote_trainer.EvaluationResponse\x12]\n" +
+	"\x10EvaluatePosition\x12!.remote_trainer.EvaluationRequest\x1a&.remote_trainer.EvaluationResponseData\x12=\n" +
+	"\vResetServer\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty2S\n" +
+	"\n" +
+	"NetTrainer\x12E\n" +
+	"\rAppendDataset\x12\x1c.remote_trainer.TrainingData\x1a\x16.google.protobuf.EmptyB\x11Z\x0f/remote_trainerb\x06proto3"
 
 var (
 	file_proto_remote_trainer_proto_rawDescOnce sync.Once
@@ -266,26 +436,35 @@ func file_proto_remote_trainer_proto_rawDescGZIP() []byte {
 	return file_proto_remote_trainer_proto_rawDescData
 }
 
-var file_proto_remote_trainer_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_remote_trainer_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_proto_remote_trainer_proto_goTypes = []any{
 	(*EvaluationRequest)(nil),      // 0: remote_trainer.EvaluationRequest
-	(*EvaluationResponseData)(nil), // 1: remote_trainer.EvaluationResponseData
-	(*EvaluationResponse)(nil),     // 2: remote_trainer.EvaluationResponse
-	(*emptypb.Empty)(nil),          // 3: google.protobuf.Empty
+	(*RetrieveRequest)(nil),        // 1: remote_trainer.RetrieveRequest
+	(*EvaluationResponseData)(nil), // 2: remote_trainer.EvaluationResponseData
+	(*EvaluationResponse)(nil),     // 3: remote_trainer.EvaluationResponse
+	(*TrainingSample)(nil),         // 4: remote_trainer.TrainingSample
+	(*TrainingData)(nil),           // 5: remote_trainer.TrainingData
+	(*emptypb.Empty)(nil),          // 6: google.protobuf.Empty
 }
 var file_proto_remote_trainer_proto_depIdxs = []int32{
-	1, // 0: remote_trainer.EvaluationResponse.data:type_name -> remote_trainer.EvaluationResponseData
-	0, // 1: remote_trainer.PositionEvaluator.EvaluatePosition:input_type -> remote_trainer.EvaluationRequest
-	3, // 2: remote_trainer.PositionEvaluator.RetrieveEvaluation:input_type -> google.protobuf.Empty
-	3, // 3: remote_trainer.PositionEvaluator.ResetServer:input_type -> google.protobuf.Empty
-	3, // 4: remote_trainer.PositionEvaluator.EvaluatePosition:output_type -> google.protobuf.Empty
-	2, // 5: remote_trainer.PositionEvaluator.RetrieveEvaluation:output_type -> remote_trainer.EvaluationResponse
-	3, // 6: remote_trainer.PositionEvaluator.ResetServer:output_type -> google.protobuf.Empty
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: remote_trainer.EvaluationResponse.data:type_name -> remote_trainer.EvaluationResponseData
+	0, // 1: remote_trainer.TrainingSample.inputs:type_name -> remote_trainer.EvaluationRequest
+	4, // 2: remote_trainer.TrainingData.data:type_name -> remote_trainer.TrainingSample
+	0, // 3: remote_trainer.PositionEvaluator.SubmitEvaluation:input_type -> remote_trainer.EvaluationRequest
+	1, // 4: remote_trainer.PositionEvaluator.RetrieveEvaluation:input_type -> remote_trainer.RetrieveRequest
+	0, // 5: remote_trainer.PositionEvaluator.EvaluatePosition:input_type -> remote_trainer.EvaluationRequest
+	6, // 6: remote_trainer.PositionEvaluator.ResetServer:input_type -> google.protobuf.Empty
+	5, // 7: remote_trainer.NetTrainer.AppendDataset:input_type -> remote_trainer.TrainingData
+	6, // 8: remote_trainer.PositionEvaluator.SubmitEvaluation:output_type -> google.protobuf.Empty
+	3, // 9: remote_trainer.PositionEvaluator.RetrieveEvaluation:output_type -> remote_trainer.EvaluationResponse
+	2, // 10: remote_trainer.PositionEvaluator.EvaluatePosition:output_type -> remote_trainer.EvaluationResponseData
+	6, // 11: remote_trainer.PositionEvaluator.ResetServer:output_type -> google.protobuf.Empty
+	6, // 12: remote_trainer.NetTrainer.AppendDataset:output_type -> google.protobuf.Empty
+	8, // [8:13] is the sub-list for method output_type
+	3, // [3:8] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_remote_trainer_proto_init() }
@@ -293,16 +472,16 @@ func file_proto_remote_trainer_proto_init() {
 	if File_proto_remote_trainer_proto != nil {
 		return
 	}
-	file_proto_remote_trainer_proto_msgTypes[2].OneofWrappers = []any{}
+	file_proto_remote_trainer_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_remote_trainer_proto_rawDesc), len(file_proto_remote_trainer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   6,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_proto_remote_trainer_proto_goTypes,
 		DependencyIndexes: file_proto_remote_trainer_proto_depIdxs,

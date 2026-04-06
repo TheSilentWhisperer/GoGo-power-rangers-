@@ -9,10 +9,12 @@ type MctsNode interface {
 	GetParent() MctsNode
 	GetIdx() int
 	GetN() []int
+	GetTotalN() int
 	GetQ() []float64
 	GetChildren() []MctsNode
 	GetIsEvaluating(action_idx int) bool
 	SetIsEvaluating(action_idx int, value bool)
 	GetIsTerminal(action_idx int) bool
 	SetIsTerminal(action_idx int, value bool)
+	GetHasPriors() bool
 }

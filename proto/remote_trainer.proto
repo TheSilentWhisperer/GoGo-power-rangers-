@@ -7,9 +7,14 @@ option go_package = "/remote_trainer";
 import "google/protobuf/empty.proto";
 
 service PositionEvaluator {
-    rpc EvaluatePosition (EvaluationRequest) returns (google.protobuf.Empty);
-    rpc RetrieveEvaluation (google.protobuf.Empty) returns (EvaluationResponse);
+    rpc SubmitEvaluation (EvaluationRequest) returns (google.protobuf.Empty);
+    rpc RetrieveEvaluation (RetrieveRequest) returns (EvaluationResponse);
+    rpc EvaluatePosition (EvaluationRequest) returns (EvaluationResponseData);
     rpc ResetServer (google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+service NetTrainer {
+    rpc AppendDataset (TrainingData) returns (google.protobuf.Empty);
 }
 
 message EvaluationRequest {
@@ -21,6 +26,11 @@ message EvaluationRequest {
     int64 black_to_play = 6;
     int64 enemy_passed = 7;
     repeated bool legal_actions_mask = 8;
+    bool flush = 9;
+}
+
+message RetrieveRequest {
+    int64 process_id = 1;  // PID of requesting process for response routing
 }
 
 message EvaluationResponseData {
@@ -31,4 +41,14 @@ message EvaluationResponseData {
 
 message EvaluationResponse {
     optional EvaluationResponseData data = 2;
+}
+
+message TrainingSample {
+    EvaluationRequest inputs = 1;
+    repeated int64 policy_target = 2;
+}
+
+message TrainingData {
+    repeated TrainingSample data = 1;
+    double value = 2;
 }

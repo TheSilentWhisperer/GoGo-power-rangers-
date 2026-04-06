@@ -20,8 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PositionEvaluator_EvaluatePosition_FullMethodName   = "/remote_trainer.PositionEvaluator/EvaluatePosition"
+	PositionEvaluator_SubmitEvaluation_FullMethodName   = "/remote_trainer.PositionEvaluator/SubmitEvaluation"
 	PositionEvaluator_RetrieveEvaluation_FullMethodName = "/remote_trainer.PositionEvaluator/RetrieveEvaluation"
+	PositionEvaluator_EvaluatePosition_FullMethodName   = "/remote_trainer.PositionEvaluator/EvaluatePosition"
 	PositionEvaluator_ResetServer_FullMethodName        = "/remote_trainer.PositionEvaluator/ResetServer"
 )
 
@@ -29,8 +30,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PositionEvaluatorClient interface {
-	EvaluatePosition(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	RetrieveEvaluation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*EvaluationResponse, error)
+	SubmitEvaluation(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RetrieveEvaluation(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*EvaluationResponse, error)
+	EvaluatePosition(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*EvaluationResponseData, error)
 	ResetServer(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -42,20 +44,30 @@ func NewPositionEvaluatorClient(cc grpc.ClientConnInterface) PositionEvaluatorCl
 	return &positionEvaluatorClient{cc}
 }
 
-func (c *positionEvaluatorClient) EvaluatePosition(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *positionEvaluatorClient) SubmitEvaluation(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, PositionEvaluator_EvaluatePosition_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PositionEvaluator_SubmitEvaluation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *positionEvaluatorClient) RetrieveEvaluation(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*EvaluationResponse, error) {
+func (c *positionEvaluatorClient) RetrieveEvaluation(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*EvaluationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(EvaluationResponse)
 	err := c.cc.Invoke(ctx, PositionEvaluator_RetrieveEvaluation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *positionEvaluatorClient) EvaluatePosition(ctx context.Context, in *EvaluationRequest, opts ...grpc.CallOption) (*EvaluationResponseData, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EvaluationResponseData)
+	err := c.cc.Invoke(ctx, PositionEvaluator_EvaluatePosition_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,8 +88,9 @@ func (c *positionEvaluatorClient) ResetServer(ctx context.Context, in *emptypb.E
 // All implementations must embed UnimplementedPositionEvaluatorServer
 // for forward compatibility.
 type PositionEvaluatorServer interface {
-	EvaluatePosition(context.Context, *EvaluationRequest) (*emptypb.Empty, error)
-	RetrieveEvaluation(context.Context, *emptypb.Empty) (*EvaluationResponse, error)
+	SubmitEvaluation(context.Context, *EvaluationRequest) (*emptypb.Empty, error)
+	RetrieveEvaluation(context.Context, *RetrieveRequest) (*EvaluationResponse, error)
+	EvaluatePosition(context.Context, *EvaluationRequest) (*EvaluationResponseData, error)
 	ResetServer(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPositionEvaluatorServer()
 }
@@ -89,11 +102,14 @@ type PositionEvaluatorServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPositionEvaluatorServer struct{}
 
-func (UnimplementedPositionEvaluatorServer) EvaluatePosition(context.Context, *EvaluationRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method EvaluatePosition not implemented")
+func (UnimplementedPositionEvaluatorServer) SubmitEvaluation(context.Context, *EvaluationRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method SubmitEvaluation not implemented")
 }
-func (UnimplementedPositionEvaluatorServer) RetrieveEvaluation(context.Context, *emptypb.Empty) (*EvaluationResponse, error) {
+func (UnimplementedPositionEvaluatorServer) RetrieveEvaluation(context.Context, *RetrieveRequest) (*EvaluationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RetrieveEvaluation not implemented")
+}
+func (UnimplementedPositionEvaluatorServer) EvaluatePosition(context.Context, *EvaluationRequest) (*EvaluationResponseData, error) {
+	return nil, status.Error(codes.Unimplemented, "method EvaluatePosition not implemented")
 }
 func (UnimplementedPositionEvaluatorServer) ResetServer(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method ResetServer not implemented")
@@ -119,6 +135,42 @@ func RegisterPositionEvaluatorServer(s grpc.ServiceRegistrar, srv PositionEvalua
 	s.RegisterService(&PositionEvaluator_ServiceDesc, srv)
 }
 
+func _PositionEvaluator_SubmitEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EvaluationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PositionEvaluatorServer).SubmitEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PositionEvaluator_SubmitEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PositionEvaluatorServer).SubmitEvaluation(ctx, req.(*EvaluationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PositionEvaluator_RetrieveEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetrieveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PositionEvaluatorServer).RetrieveEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PositionEvaluator_RetrieveEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PositionEvaluatorServer).RetrieveEvaluation(ctx, req.(*RetrieveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PositionEvaluator_EvaluatePosition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EvaluationRequest)
 	if err := dec(in); err != nil {
@@ -133,24 +185,6 @@ func _PositionEvaluator_EvaluatePosition_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PositionEvaluatorServer).EvaluatePosition(ctx, req.(*EvaluationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PositionEvaluator_RetrieveEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PositionEvaluatorServer).RetrieveEvaluation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PositionEvaluator_RetrieveEvaluation_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PositionEvaluatorServer).RetrieveEvaluation(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -181,16 +215,122 @@ var PositionEvaluator_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PositionEvaluatorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "EvaluatePosition",
-			Handler:    _PositionEvaluator_EvaluatePosition_Handler,
+			MethodName: "SubmitEvaluation",
+			Handler:    _PositionEvaluator_SubmitEvaluation_Handler,
 		},
 		{
 			MethodName: "RetrieveEvaluation",
 			Handler:    _PositionEvaluator_RetrieveEvaluation_Handler,
 		},
 		{
+			MethodName: "EvaluatePosition",
+			Handler:    _PositionEvaluator_EvaluatePosition_Handler,
+		},
+		{
 			MethodName: "ResetServer",
 			Handler:    _PositionEvaluator_ResetServer_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/remote_trainer.proto",
+}
+
+const (
+	NetTrainer_AppendDataset_FullMethodName = "/remote_trainer.NetTrainer/AppendDataset"
+)
+
+// NetTrainerClient is the client API for NetTrainer service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type NetTrainerClient interface {
+	AppendDataset(ctx context.Context, in *TrainingData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+}
+
+type netTrainerClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewNetTrainerClient(cc grpc.ClientConnInterface) NetTrainerClient {
+	return &netTrainerClient{cc}
+}
+
+func (c *netTrainerClient) AppendDataset(ctx context.Context, in *TrainingData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, NetTrainer_AppendDataset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// NetTrainerServer is the server API for NetTrainer service.
+// All implementations must embed UnimplementedNetTrainerServer
+// for forward compatibility.
+type NetTrainerServer interface {
+	AppendDataset(context.Context, *TrainingData) (*emptypb.Empty, error)
+	mustEmbedUnimplementedNetTrainerServer()
+}
+
+// UnimplementedNetTrainerServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedNetTrainerServer struct{}
+
+func (UnimplementedNetTrainerServer) AppendDataset(context.Context, *TrainingData) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method AppendDataset not implemented")
+}
+func (UnimplementedNetTrainerServer) mustEmbedUnimplementedNetTrainerServer() {}
+func (UnimplementedNetTrainerServer) testEmbeddedByValue()                    {}
+
+// UnsafeNetTrainerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to NetTrainerServer will
+// result in compilation errors.
+type UnsafeNetTrainerServer interface {
+	mustEmbedUnimplementedNetTrainerServer()
+}
+
+func RegisterNetTrainerServer(s grpc.ServiceRegistrar, srv NetTrainerServer) {
+	// If the following call panics, it indicates UnimplementedNetTrainerServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&NetTrainer_ServiceDesc, srv)
+}
+
+func _NetTrainer_AppendDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrainingData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NetTrainerServer).AppendDataset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NetTrainer_AppendDataset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NetTrainerServer).AppendDataset(ctx, req.(*TrainingData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// NetTrainer_ServiceDesc is the grpc.ServiceDesc for NetTrainer service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var NetTrainer_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "remote_trainer.NetTrainer",
+	HandlerType: (*NetTrainerServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AppendDataset",
+			Handler:    _NetTrainer_AppendDataset_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

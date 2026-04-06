@@ -1,6 +1,6 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch
 
 class MaskedSoftmax(nn.Module):
     def __init__(self, dim):
@@ -8,80 +8,95 @@ class MaskedSoftmax(nn.Module):
         self.dim = dim
 
     def forward(self, input, mask):
-        # Apply the mask to the input
         masked_input = input.masked_fill(mask == 0, float('-inf'))
-        # Compute softmax on the masked input
         return F.softmax(masked_input, dim=self.dim)
 
 class ResidualBlock(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, channels):
         super(ResidualBlock, self).__init__()
-
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=1, padding=1)
-        self.bn1 = nn.BatchNorm2d(out_channels)
-
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1)
-        self.bn2 = nn.BatchNorm2d(out_channels)
-
-        self.skip_connection = nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=1) if in_channels != out_channels else None
+        self.conv1 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)
+        self.ln1 = nn.GroupNorm(1, channels)  # GroupNorm with 1 group = LayerNorm
+        self.conv2 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)
+        self.ln2 = nn.GroupNorm(1, channels)
+        # He initialization for Conv2d with ReLU
+        nn.init.kaiming_normal_(self.conv1.weight, mode='fan_out', nonlinearity='relu')
+        nn.init.kaiming_normal_(self.conv2.weight, mode='fan_out', nonlinearity='relu')
 
     def forward(self, x):
-        residual = x if self.skip_connection is None else self.skip_connection(x)
+        residual = x
+        out = F.relu(self.ln1(self.conv1(x)))
+        out = self.ln2(self.conv2(out))
+        out += residual
+        out = F.relu(out)
+        return out
 
-        x = self.conv1(x)
-        x = self.bn1(x)
-        x = F.relu(x)
-
-        x = self.conv2(x)
-        x = self.bn2(x)
-        x += residual  # Skip connection
-        x = F.relu(x)
-
-        return x
 
 class Gogo81(nn.Module):
-    def __init__(self):
+    def __init__(self, model_channels: int = 96, num_res_blocks: int = 15, input_planes: int = 4):
         super(Gogo81, self).__init__()
+        # Encoder: increased capacity for 9x9 with moderate depth
+        self.model_channels = model_channels
+        self.num_res_blocks = num_res_blocks
 
-        self.encoder = nn.Sequential(
-            ResidualBlock(4, 4),
-            ResidualBlock(4, 4),
-            ResidualBlock(4, 4),
-            ResidualBlock(4, 1)
-        )
+        # Create input projection at init so optimizer sees all params.
+        # Default `input_planes` matches the repo's `NewGame(..., 4, ...)` history length.
+        self.input_conv = nn.Conv2d(input_planes, self.model_channels, kernel_size=3, padding=1)
+        self.ln_input = nn.GroupNorm(1, self.model_channels)  # LayerNorm for input
 
-        self.value_head = nn.Sequential(
-            # board_encoding (81) + player_color (1) + pass_count (1)
-            nn.Linear(81 + 1 + 1, 128),
-            nn.ReLU(),  
-            nn.Linear(128, 1),
-            nn.Tanh()  # Output value in range [-1, 1]
-        )
+        # Residual trunk
+        self.res_blocks = nn.Sequential(*[ResidualBlock(self.model_channels) for _ in range(self.num_res_blocks)])
 
-        self.policy_head = nn.Sequential(
-            # board_encoding (81) + player_color (1) + pass_count (1)
-            nn.Linear(81 + 1 + 1, 128),
-            nn.ReLU(),
-            nn.Linear(128, 83)  # 81 for board positions + 1 for pass + 1 for resign
-        )   
+        # Policy head (maps trunk features -> per-loc logits + pass/resign)
+        # Increased from 2 to 16 channels to better preserve spatial structure
+        self.policy_conv = nn.Conv2d(self.model_channels, 16, kernel_size=1)
+        self.ln_policy = nn.GroupNorm(1, 16)  # LayerNorm for policy
+        self.policy_fc = nn.Linear(16*9*9 + 1 + 1, 83)
 
+        # Value head
+        self.value_conv = nn.Conv2d(self.model_channels, 1, kernel_size=1)
+        self.ln_value = nn.GroupNorm(1, 1)  # LayerNorm for value
+        self.value_fc1 = nn.Linear(9*9 + 1 + 1, 64)
+        self.value_fc2 = nn.Linear(64, 1)
 
+        # He initialization for hidden layers
+        nn.init.kaiming_normal_(self.input_conv.weight, mode='fan_out', nonlinearity='relu')
+        nn.init.kaiming_normal_(self.policy_conv.weight, mode='fan_out', nonlinearity='relu')
+        nn.init.kaiming_normal_(self.value_conv.weight, mode='fan_out', nonlinearity='relu')
+        nn.init.kaiming_normal_(self.value_fc1.weight, mode='fan_out', nonlinearity='relu')
+        # Initialize output layers with small weights for stability (softmax/tanh outputs)
+        nn.init.uniform_(self.policy_fc.weight, -0.01, 0.01)
+        nn.init.uniform_(self.value_fc2.weight, -0.01, 0.01)
 
-    def forward(self, input):
-        # input["board"] shape: (batch_size, 4, 9, 9)
-        # input["player_color"] shape: (batch_size, 1)
-        # input["pass_count"] shape: (batch_size, 1)
+    def forward(self, batch_inputs):
+        B = batch_inputs["boards"].shape[0]
+        x = batch_inputs["boards"]
 
-        board_encoding = self.encoder(input["board"])  # Shape: (batch_size, 1, 9, 9)
-        board_encoding = board_encoding.view(board_encoding.size(0), -1)  # Shape: (batch_size, 81)
-        player_color = input["player_color"]  # Shape: (batch_size, 1)
-        pass_count = input["pass_count"]  # Shape: (batch_size, 1)
-        combined_input = torch.cat([board_encoding, player_color, pass_count], dim=1)  # Shape: (batch_size, 83)
+        # Create lazy input projection if needed (handles variable history length)
+        if self.input_conv is None or self.input_conv.in_channels != x.shape[1]:
+            in_ch = x.shape[1]
+            self.input_conv = nn.Conv2d(in_ch, self.model_channels, kernel_size=3, padding=1)
+            self.ln_input = nn.GroupNorm(1, self.model_channels)
+            # Move newly created modules to the same device as the input
+            device = x.device
+            self.input_conv.to(device)
+            self.ln_input.to(device)
 
-        values = self.value_head(combined_input)  # Shape: (batch_size, 1)
-        policy = self.policy_head(combined_input)  # Shape: (batch_size, 82)
-        priors = MaskedSoftmax(dim=1)(policy, input["legal_masks"])  # Shape: (batch_size, 82)
+        # Encoder
+        x = F.relu(self.ln_input(self.input_conv(x)))
+        x = self.res_blocks(x)
 
-        return input["request_ids"], values, priors
+        # Policy head
+        p = F.relu(self.ln_policy(self.policy_conv(x)))
+        p = p.view(B, -1)
+        p = torch.cat([p, batch_inputs["player_colors"], batch_inputs["pass_counts"]], dim=1)
+        # Raw policy logits; softmax + masking is handled by the inference/training code.
+        policy_logits = self.policy_fc(p)
 
+        # Value head
+        v = F.relu(self.ln_value(self.value_conv(x)))
+        v = v.view(B, -1)
+        v = torch.cat([v, batch_inputs["player_colors"], batch_inputs["pass_counts"]], dim=1)
+        v = F.relu(self.value_fc1(v))
+        value = torch.tanh(self.value_fc2(v))
 
+        return batch_inputs["request_ids"], value, policy_logits

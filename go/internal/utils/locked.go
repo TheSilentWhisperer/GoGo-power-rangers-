@@ -56,6 +56,14 @@ func (lv *LockedValue) Set(value int) {
 	lv.value = value
 }
 
+func (lv *LockedValue) IfSet(x, value int) {
+	lv.mutex.Lock()
+	defer lv.mutex.Unlock()
+	if lv.value == x {
+		lv.value = value
+	}
+}
+
 func (lv *LockedValue) CompareAndIncrement(max_value int) bool {
 	lv.mutex.Lock()
 	defer lv.mutex.Unlock()
@@ -143,4 +151,23 @@ func (lm *LockedMap[K, V]) Delete(key K) {
 	lm.mutex.Lock()
 	defer lm.mutex.Unlock()
 	delete(lm.value, key)
+}
+func (lm *LockedMap[K, V]) Len() int {
+	lm.mutex.Lock()
+	defer lm.mutex.Unlock()
+	return len(lm.value)
+}
+
+// Lock exposes the mutex for temporary direct access if needed
+func (lm *LockedMap[K, V]) Lock() {
+	lm.mutex.Lock()
+}
+
+func (lm *LockedMap[K, V]) Unlock() {
+	lm.mutex.Unlock()
+}
+
+// GetData exposes internal data map (caller must hold lock)
+func (lm *LockedMap[K, V]) GetData() map[K]V {
+	return lm.value
 }

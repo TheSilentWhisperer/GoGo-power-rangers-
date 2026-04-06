@@ -1,6 +1,11 @@
 package environment
 
-import "github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+import (
+	"fmt"
+
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/gen/proto/remote_trainer"
+	"github.com/TheSilentWhisperer/GoGo-power-rangers-/go/internal/utils"
+)
 
 type Score struct {
 	Black float64
@@ -61,7 +66,7 @@ func (game *Game) GetLegalMask() []bool {
 	return legal_mask
 }
 
-func (game *Game) Message(request_id int) *remote_trainer.EvaluationRequest {
+func (game *Game) EvaluationRequest(request_id int64, flush bool) *remote_trainer.EvaluationRequest {
 	var board *Board = game.Board
 	var history_length int = game.Board.HistoryLength
 
@@ -77,9 +82,9 @@ func (game *Game) Message(request_id int) *remote_trainer.EvaluationRequest {
 				switch board.Matrix.At(h)[i][j] {
 				case Empty:
 					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = 0
-				case Black:
+				case board.CurrentPlayer:
 					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = 1
-				case White:
+				case board.CurrentPlayer.Opponent():
 					flattened_board_history[h*board.Height*board.Width+i*board.Width+j] = -1
 				}
 			}
@@ -102,9 +107,19 @@ func (game *Game) Message(request_id int) *remote_trainer.EvaluationRequest {
 	case NewPasses(false, true):
 		pass_count = 1
 	case NewPasses(true, true):
-		panic("We should not ask for a position evaluation of a terminal position")
+		pass_count = 2
 	default:
 		pass_count = 0
+	}
+
+	var enemy_passed int64
+	switch board.CurrentPlayer {
+	case Black:
+		enemy_passed = pass_count
+	case White:
+		enemy_passed = -pass_count
+	default:
+		panic("Invalid current player color")
 	}
 
 	var message *remote_trainer.EvaluationRequest = &remote_trainer.EvaluationRequest{
@@ -114,78 +129,135 @@ func (game *Game) Message(request_id int) *remote_trainer.EvaluationRequest {
 		Width:                 int64(board.Width),
 		FlattenedBoardHistory: flattened_board_history,
 		BlackToPlay:           player_color,
-		EnemyPassed:           pass_count,
+		EnemyPassed:           enemy_passed,
 		LegalActionsMask:      game.GetLegalMask(),
+		Flush:                 flush,
 	}
 	return message
 }
 
+func (game *Game) TrainingData(position_history []*utils.LockedPair[*Game, []int]) *remote_trainer.TrainingData {
+
+	var data []*remote_trainer.TrainingSample = make([]*remote_trainer.TrainingSample, len(position_history))
+
+	// Determine outcome from Black's perspective (always consistent reference frame)
+	var final_winner Stone = game.GetWinner()
+	var value float64 = map[bool]float64{true: 1.0, false: -1.0}[final_winner == Black]
+
+	for i, locked_pair := range position_history {
+		var game *Game = locked_pair.Pair.First
+		var N []int = locked_pair.Pair.Second
+
+		// Sanity check: game.LegalActions and N must have the same length
+		if len(game.LegalActions) != len(N) {
+			panic(fmt.Sprintf("Position %d: LegalActions length (%d) != N length (%d)", i, len(game.LegalActions), len(N)))
+		}
+
+		var visit_counts []int64 = make([]int64, 83)
+		for i, action := range game.LegalActions {
+			switch action := action.(type) {
+			case PutStone:
+				var put_stone PutStone = action
+				visit_counts[2+put_stone.I*game.Board.Width+put_stone.J] = int64(N[i])
+			case Pass:
+				visit_counts[1] = int64(N[i])
+			case Resign:
+				visit_counts[0] = int64(N[i])
+			default:
+				panic("Unknown action type")
+			}
+		}
+
+		var training_sample *remote_trainer.TrainingSample = &remote_trainer.TrainingSample{
+			Inputs:       game.EvaluationRequest(0, false),
+			PolicyTarget: visit_counts,
+		}
+		data[i] = training_sample
+	}
+
+	var training_data *remote_trainer.TrainingData = &remote_trainer.TrainingData{
+		Data:  data,
+		Value: value,
+	}
+	return training_data
+}
+
 // Methods
 func (game *Game) ComputeScore() Score {
-	var black_score float64 = 0.0
-	var white_score float64 = game.Komi
-	// dfs from each empty point to determine territory
-	var is_black [][]bool = make([][]bool, game.Board.Height)
-	var is_white [][]bool = make([][]bool, game.Board.Height)
-	for i := range is_white {
-		is_white[i] = make([]bool, game.Board.Width)
+	// Count stones first
+	var black_stones, white_stones, empty_cells int
+	for i := 0; i < game.Board.Height; i++ {
+		for j := 0; j < game.Board.Width; j++ {
+			switch game.Board.Matrix.Front()[i][j] {
+			case Black:
+				black_stones++
+			case White:
+				white_stones++
+			default:
+				empty_cells++
+			}
+		}
 	}
-	for i := range is_black {
-		is_black[i] = make([]bool, game.Board.Width)
-	}
+
+	// Prepare visited map for empty-region flood-fill
 	var visited [][]bool = make([][]bool, game.Board.Height)
 	for i := range visited {
 		visited[i] = make([]bool, game.Board.Width)
 	}
 
-	var dfs func(i, j int)
+	var black_territory, white_territory, neutral_points int
 
-	dfs = func(i, j int) {
-		visited[i][j] = true
-		var neighbors map[Position]Stone = game.Board.GetNeighbors(i, j)
-		for neighbor, neighbor_stone := range neighbors {
-			switch neighbor_stone {
-			case Empty:
-				if !visited[neighbor.First][neighbor.Second] {
-					dfs(neighbor.First, neighbor.Second)
-				}
-				is_black[i][j] = is_black[neighbor.First][neighbor.Second] || is_black[i][j]
-				is_white[i][j] = is_white[neighbor.First][neighbor.Second] || is_white[i][j]
-			case Black:
-				is_black[i][j] = true
-			case White:
-				is_white[i][j] = true
-			}
-		}
-	}
-
+	// For each empty cell not yet visited, BFS its connected empty region
 	for i := 0; i < game.Board.Height; i++ {
 		for j := 0; j < game.Board.Width; j++ {
-			if !visited[i][j] && game.Board.Matrix.Front()[i][j] == Empty {
-				dfs(i, j)
+			if visited[i][j] || game.Board.Matrix.Front()[i][j] != Empty {
+				continue
+			}
+
+			// BFS queue
+			var queue []Position
+			queue = append(queue, NewPosition(i, j))
+			visited[i][j] = true
+			var component []Position
+			surroundsBlack := false
+			surroundsWhite := false
+
+			for len(queue) > 0 {
+				pos := queue[0]
+				queue = queue[1:]
+				component = append(component, pos)
+
+				neighbors := game.Board.GetNeighbors(pos.First, pos.Second)
+				for npos, nstone := range neighbors {
+					switch nstone {
+					case Empty:
+						if !visited[npos.First][npos.Second] {
+							visited[npos.First][npos.Second] = true
+							queue = append(queue, npos)
+						}
+					case Black:
+						surroundsBlack = true
+					case White:
+						surroundsWhite = true
+					}
+				}
+			}
+
+			// Assign territory: only if surrounded exclusively by one color
+			if surroundsBlack && !surroundsWhite {
+				black_territory += len(component)
+			} else if surroundsWhite && !surroundsBlack {
+				white_territory += len(component)
+			} else {
+				neutral_points += len(component)
 			}
 		}
 	}
 
-	for i := 0; i < game.Board.Height; i++ {
-		for j := 0; j < game.Board.Width; j++ {
-			switch game.Board.Matrix.Front()[i][j] {
-			case Black:
-				black_score += 1.0
-			case White:
-				white_score += 1.0
-			case Empty:
-				if is_black[i][j] && !is_white[i][j] {
-					black_score += 1.0
-				} else if is_white[i][j] && !is_black[i][j] {
-					white_score += 1.0
-				} else {
-					black_score += 0.5
-					white_score += 0.5
-				}
-			}
-		}
-	}
+	// Final scores: stones + territory (komi applied to white)
+	var black_score float64 = float64(black_stones + black_territory)
+	var white_score float64 = float64(white_stones + white_territory)
+	white_score += game.Komi
 
 	return NewScore(black_score, white_score)
 }
@@ -412,8 +484,8 @@ func (game *Game) PlayAction(action Action) {
 
 // Debugging and Display
 func (game *Game) DebugLiberties() {
-	for root_pos, group := range game.Board.UnionFind.Groups {
-		println("Group at (", root_pos.First, ",", root_pos.Second, ") has", group.Liberties, "liberties")
+	for _, _ = range game.Board.UnionFind.Groups {
+		// println("Group at (", root_pos.First, ",", root_pos.Second, ") has", group.Liberties, "liberties")
 	}
 }
 

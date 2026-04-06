@@ -6,6 +6,5 @@ import (
 )
 
 type Evaluator interface {
-	Evaluate(utils.Triple[MctsNode, int, *environment.Game]) utils.Triple[MctsNode, float64, *environment.Game]
 	GetEvaluationQueue() *utils.LockedQueue[utils.Triple[MctsNode, int, *environment.Game]]
 }
