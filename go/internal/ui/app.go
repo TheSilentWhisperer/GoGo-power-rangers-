@@ -65,20 +65,32 @@ type App struct {
 	UIMetadata          *UIMetadata
 	KeyStates           map[ebiten.Key]*utils.LockedPointer[KeyState]
 	Client              remote_trainer.NetTrainerClient
+	EvaluationMode      bool // If true, skip training data submission
 }
 
-func NewApp(game *environment.Game, ui_metadata *UIMetadata, key_list []ebiten.Key, inference_client remote_trainer.PositionEvaluatorClient, training_client remote_trainer.NetTrainerClient) *App {
+func NewApp(game *environment.Game, ui_metadata *UIMetadata, key_list []ebiten.Key, inference_client remote_trainer.PositionEvaluatorClient, training_client remote_trainer.NetTrainerClient, evaluation_mode bool) *App {
 	var app *App = &App{
 		MoveSearchInitiated: make(chan bool, 1),
 		IsPaused:            utils.NewLockedBool(false),
 		UIMetadata:          ui_metadata,
 		KeyStates:           make(map[ebiten.Key]*utils.LockedPointer[KeyState]),
 		Client:              training_client,
+		EvaluationMode:      evaluation_mode,
 	}
 
-	// Create agents for single game
-	var black_agent agents.Agent = agents.NewPuctAgent(400, 8, 16, -0.90, inference_client, 0.25, 10)
-	var white_agent agents.Agent = agents.NewPuctAgent(400, 8, 16, -0.90, inference_client, 0.25, 10)
+	// Create agents based on mode
+	var black_agent agents.Agent
+	var white_agent agents.Agent
+
+	if evaluation_mode {
+		// Evaluation mode: 2000 simulations, argmax, no noise
+		black_agent = agents.NewPuctAgentEval(5000, 8, 16, -0.9, inference_client)
+		white_agent = agents.NewPuctAgentEval(5000, 8, 16, -0.9, inference_client)
+	} else {
+		// Training mode: 400 simulations, temperature sampling, Dirichlet noise
+		black_agent = agents.NewPuctAgent(400, 8, 16, -0.99, inference_client, 0.25, 10)
+		white_agent = agents.NewPuctAgent(400, 8, 16, -0.99, inference_client, 0.25, 10)
+	}
 
 	app.GameState = &GameState{
 		Game:            utils.NewLockedPointer(game),
@@ -94,7 +106,7 @@ func NewApp(game *environment.Game, ui_metadata *UIMetadata, key_list []ebiten.K
 	return app
 }
 
-func InitializeApp() *App {
+func InitializeApp(evaluation_mode bool) *App {
 	//establish UDS connection to the position evaluation server
 	conn, err := grpc.NewClient("unix:///tmp/position_evaluator.sock", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -123,7 +135,7 @@ func InitializeApp() *App {
 	var KeyList []ebiten.Key = []ebiten.Key{ebiten.KeySpace}
 
 	var ui_metadata *UIMetadata = NewUI(WindowTitle, margin, BoardSize, HighlightedIntersectionsRadiusScale, StoneRadiusScale, DescriptionBarHeight, PassSquareSizeScale)
-	var app *App = NewApp(game, ui_metadata, KeyList, inference_client, training_client)
+	var app *App = NewApp(game, ui_metadata, KeyList, inference_client, training_client, evaluation_mode)
 
 	ebiten.SetWindowSize(app.WindowWidth(), app.WindowHeight())
 	ebiten.SetWindowTitle(WindowTitle)

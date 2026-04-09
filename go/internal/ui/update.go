@@ -19,12 +19,14 @@ func (app *App) Update() error {
 	gameState := app.GameState
 
 	if gameState.Game.Get().IsTerminal() {
-		// Send training data synchronously, then restart the game
-		training_data := gameState.Game.Get().TrainingData(gameState.PositionHistory)
-		_, err := app.Client.AppendDataset(context.Background(), training_data)
-		if err != nil {
-			// Log but don't crash on training data submission errors
-			println("[WARN] Failed to submit training data:", err.Error())
+		// Send training data synchronously in training mode, skip in evaluation mode
+		if !app.EvaluationMode {
+			training_data := gameState.Game.Get().TrainingData(gameState.PositionHistory)
+			_, err := app.Client.AppendDataset(context.Background(), training_data)
+			if err != nil {
+				// Log but don't crash on training data submission errors
+				println("[WARN] Failed to submit training data:", err.Error())
+			}
 		}
 
 		// Reset game state for next game
@@ -56,16 +58,6 @@ func (app *App) Update() error {
 			var game_copy *environment.Game = gameState.Game.Get().DeepCopy()
 
 			var action environment.Action = current_agent.SelectAction(game_copy)
-			var current_player string
-			switch game_copy.Board.CurrentPlayer {
-			case environment.Black:
-				current_player = "Black"
-			case environment.White:
-				current_player = "White"
-			default:
-				current_player = "Unknown"
-			}
-			println("Current player:", current_player, "Selected action:", action.String())
 			gameState.IsThinking.Set(false)
 			for app.IsPaused.Get() {
 				// Wait for the space key to be pressed to play the move, this allows the user to see the move before it is played

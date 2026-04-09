@@ -28,6 +28,7 @@ type MctsAgent struct {
 	BackpropagationQueue *utils.LockedQueue[utils.Pair[MctsNode, float64]]                  // (Node, Value, GameState)
 	ResignThreshold      float64
 	Evaluator            Evaluator
+	EvaluationMode       bool // If true, use argmax and no noise for deterministic evaluation
 }
 
 // Constructor
@@ -47,6 +48,26 @@ func NewMctsAgent(simulations_per_move int, nb_routines int, max_parallel_search
 
 // Methods
 func (agent *MctsAgent) GetFinalAction(game *environment.Game, legal_actions []environment.Action) environment.Action {
+	// In evaluation mode, always use argmax (deterministic, best move)
+	if agent.EvaluationMode {
+		var best_action_index int = 0
+		var max_N int = 0
+		for i := 1; i < len(legal_actions); i++ {
+			if agent.Root.GetN()[i] > max_N {
+				max_N = agent.Root.GetN()[i]
+				best_action_index = i
+			}
+		}
+
+		// In eval mode, resign only if the best move is below threshold (easier to resign)
+		if agent.Root.GetQ()[best_action_index] <= agent.ResignThreshold {
+			fmt.Printf("Player: %v, Resigning (best move Q: %f, threshold: %f)\n", game.Board.CurrentPlayer, agent.Root.GetQ()[best_action_index], agent.ResignThreshold)
+			return environment.Resign{}
+		}
+
+		return legal_actions[best_action_index]
+	}
+
 	var tau float64 = (float64(len(legal_actions)-1) / 81) // Scale temperature by board size to keep it consistent across different board sizes
 	tau = math.Pow(tau, 2)
 	var max_N int = 0
@@ -73,7 +94,7 @@ func (agent *MctsAgent) GetFinalAction(game *environment.Game, legal_actions []e
 	}
 	var best_action_index int = choice.Item.(int)
 
-	// Only resign if ALL possible moves are valued below threshold
+	// Only resign if ALL possible moves are valued below threshold (training mode)
 	var maxQ float64 = math.Inf(-1)
 	for i := 1; i < len(legal_actions); i++ {
 		if agent.Root.GetQ()[i] > maxQ {
@@ -87,8 +108,6 @@ func (agent *MctsAgent) GetFinalAction(game *environment.Game, legal_actions []e
 	}
 
 	var best_action environment.Action = legal_actions[best_action_index]
-
-	fmt.Printf("Player: %v, Selected action: %v, N: %d, Q: %f, P: %f, MaxQ: %f\n", game.Board.CurrentPlayer, best_action, agent.Root.GetN()[best_action_index], agent.Root.GetQ()[best_action_index], agent.Root.(*PuctNode).P[best_action_index], maxQ)
 
 	return best_action
 }
@@ -269,35 +288,40 @@ func (agent *MctsAgent) InitRootNode(game *environment.Game) {
 		}
 
 		// Add Dirichlet noise to the root priors to encourage exploration.
-		alpha := agent.Alpha / float64(len(mapped)) // Scale alpha by the number of actions to keep the noise level consistent across different board sizes
-		eps := agent.Epsilon
-
-		k := len(mapped)
-		src := mrand.New(mrand.NewSource(time.Now().UnixNano()))
-		g := distuv.Gamma{Alpha: alpha, Beta: 1, Src: src}
-		dir := make([]float64, k)
-		var sum float64
-		for i := 0; i < k; i++ {
-			v := g.Rand()
-			dir[i] = v
-			sum += v
-		}
-		if sum == 0 {
-			for i := range dir {
-				dir[i] = 1.0 / float64(k)
-			}
+		// Skip noise in evaluation mode for deterministic behavior
+		if agent.EvaluationMode {
+			agent.Root = NewPuctNode(game, nil, -1, mapped)
 		} else {
-			for i := range dir {
-				dir[i] /= sum
+			alpha := agent.Alpha / float64(len(mapped)) // Scale alpha by the number of actions to keep the noise level consistent across different board sizes
+			eps := agent.Epsilon
+
+			k := len(mapped)
+			src := mrand.New(mrand.NewSource(time.Now().UnixNano()))
+			g := distuv.Gamma{Alpha: alpha, Beta: 1, Src: src}
+			dir := make([]float64, k)
+			var sum float64
+			for i := 0; i < k; i++ {
+				v := g.Rand()
+				dir[i] = v
+				sum += v
 			}
-		}
+			if sum == 0 {
+				for i := range dir {
+					dir[i] = 1.0 / float64(k)
+				}
+			} else {
+				for i := range dir {
+					dir[i] /= sum
+				}
+			}
 
-		noisy := make([]float64, k)
-		for i := 0; i < k; i++ {
-			noisy[i] = max((1-eps)*mapped[i]+eps*dir[i], 0)
-		}
+			noisy := make([]float64, k)
+			for i := 0; i < k; i++ {
+				noisy[i] = max((1-eps)*mapped[i]+eps*dir[i], 0)
+			}
 
-		agent.Root = NewPuctNode(game, nil, -1, noisy)
+			agent.Root = NewPuctNode(game, nil, -1, noisy)
+		}
 		evaluator.Reset()
 	default:
 		panic("Unknown evaluator type")

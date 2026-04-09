@@ -1,6 +1,4 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
+# === Go ===
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -17,22 +15,59 @@ coverage.*
 *.coverprofile
 profile.cov
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
 # Go workspace file
 go.work
 go.work.sum
 
-# env file
-.env
+# === Python ===
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
 
-# Editor/IDE
-# .idea/
-# .vscode/
-
-# Remove PyCache and other Python artifacts if you have Python code in the same repository
+# Python cache and artifacts
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
+dist/
+build/
+
+# === Large Generated Files ===
+# Model checkpoints and saved weights
+python/saves/*.pt
+python/saves/*.pth
+
+# Training logs
+python/logs/
+
+# Generated protobuf code (regenerable from .proto)
+python/gen/proto/*
+go/gen/proto/*
+!python/gen/__init__.py
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+texput.log
+
+# === IDE/Editor ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# === Environment ===
+.env
+.env.local
+
+# === OS ===
+.DS_Store
+Thumbs.db
