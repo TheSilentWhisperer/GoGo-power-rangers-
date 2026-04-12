@@ -39,6 +39,8 @@ build/
 # Model checkpoints and saved weights
 python/saves/*.pt
 python/saves/*.pth
+# Except for the latest checkpoint
+!python/saves/gogo81.pt
 
 # Training logs
 python/logs/
