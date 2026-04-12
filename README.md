@@ -6,7 +6,7 @@ An AlphaGo-inspired MCTS + neural network implementation trained on a single lap
 
 - **Self-play training**: MCTS with PuCT (neural network-guided tree search)
 - **Dual-process architecture**: Go client ↔ Python server via gRPC (400 simulations/move, batch inference)
-- **Training**: Gogo81 neural network (~1.5M params) on 800K FIFO replay buffer with 8:1 data augmentation
+- **Training**: Gogo81 neural network (~1.5M params) on 800K FIFO replay buffer with 12:1 data augmentation
 - **Results**: ~3-4 kyu play strength achieved on RTX 5080 in ~39 hours
 
 See [report.pdf](report.pdf) for detailed technical implementation and findings.
@@ -61,7 +61,7 @@ cd go && ./bin/play
 
 **MCTS**: PuCT algorithm with value guidance from neural network. Selection via UCB($s$, $a$) = $Q$ + $C \cdot P \cdot \sqrt{N_s} / (1 + N_{s,a})$. No virtual loss; relies on natural visit-count penalization for parallelism.
 
-**Training**: Gogo81 (~1.5M params) trained on replay buffer via experience accumulation → training phases (8× replay ratio, 512-batch Adam, cosine annealing). Aggressive quantization (int8/uint8 boards, float16 policy) enables 800K buffer in ~4GB.
+**Training**: Gogo81 (~1.5M params) trained on replay buffer via experience accumulation → training phases (12× replay ratio, 512-batch Adam, cosine annealing). Aggressive quantization (int8/uint8 boards, float16 policy) enables 800K buffer in ~4GB.
 
 ## Monitoring & Configuration
 
@@ -83,11 +83,12 @@ tmux attach -t gogo        # View logs
 tmux kill-session -t gogo  # Cleanup
 ```
 
-## Known Limitations
+## Troubleshooting
 
-**Black/White Color Asymmetry**: Trained model shows ~0% White winrate across all simulation budgets. Likely causes:
-- Architectural: Color encoding as scalar (not in initial layers)
-- Game theory: Komi 6.5 insufficient for White compensation
-- Feedback loop: Pessimistic value estimates → weak White play → reinforced pessimism
-
-See [report.pdf](report.pdf) §Results for analysis.
+| Issue | Solution |
+|-------|----------|
+| "unix:///tmp/position_evaluator.sock: connection refused" | Start Python server: `./run_server.sh` |
+| Not Linux OS | This project requires Linux (UDS not supported on macOS/Windows) |
+| CUDA out of memory | Reduce batch size in `python/services/inference.py` |
+| Slow training | Check GPU: `nvidia-smi`. Verify no competing processes. |
+| Server hangs | Restart Python server process. |
